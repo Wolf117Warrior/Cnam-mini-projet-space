@@ -47,17 +47,16 @@
 <div class="inner">
 
   <h4 class="center">Portofolio de satellite</h4>
-  <span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
   <div class="box alt">
     <div class="row 50% uniform">
 
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/satellite-103.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/satellite-103418_1920.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="images/portofolio/satellite/satellite-1030782_1920.jpg" alt="" /></span></div>
       <!-- Break -->
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/telescope-63119_1280.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/8537258881_35bce8fa2e_o.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="images/portofolio/satellite/Facebook-Satellite.jpg" alt="" /></span></div>
 
     </div>
   </div>
@@ -67,13 +66,12 @@
 <div class="inner">
 
   <h4 class="center">Portofolio de Agence</h4>
-  <span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
   <div class="box alt">
     <div class="row 50% uniform">
-      
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+
+      <div class="4u"><span class="image fit"><img src="images/portofolio/agence/ESA_Space_Operations_Centre.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="images/portofolio/agence/nasa-space-walk.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="images/portofolio/agence/spaceX.jpg" alt="" /></span></div>
     </div>
   </div>
 
