@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#ffffff">
     <!-- Js validation formulaire page contact -->
   <?php 
-  $url = split('/',$_SERVER["SCRIPT_NAME"]);
+  $url = explode('/',$_SERVER["SCRIPT_NAME"]);
   if($url[count($url)-1]=="contact.php"||(isset($access)&&$access=='admin')) { ?>
     <script type="text/javascript" src="<?php echo (isset($access)&&$access=='admin'?'../':''); ?>assets/js/validationFormulaire.js"></script>
   <?php } ?>
