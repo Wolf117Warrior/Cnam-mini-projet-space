@@ -56,8 +56,9 @@ date_default_timezone_set('America/Martinique');
   <?php //--------------------------------//
         //--- affichage liste articles ---//
         //--------------------------------// 
-        $result=$maBase->query("SELECT a.*, IFNULL(c.LIBL_categorie ,'sans catégorie')  AS 'LIBL_categorie'
-                FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie ORDER BY DATE_article DESC LIMIT 0,3"); 
+        $result=$maBase->query("SELECT a.*, c.LIBL_categorie  AS 'LIBL_categorie'
+                FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 
+                WHERE c.LIBL_categorie IS NOT NULL ORDER BY DATE_article DESC LIMIT 0,3"); 
             $i = 0;
             $count=$result->rowCount() ;
                          if($result) { 
