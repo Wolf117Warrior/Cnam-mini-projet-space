@@ -2013,6 +2013,7 @@
 		width: 100%;
 	}
 
+
 		input[type="text"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
@@ -2022,15 +2023,6 @@
 			box-shadow: none;
 		}
 
-		input[type="text"]:focus,
-		input[type="password"]:focus,
-		input[type="email"]:focus,
-		input[type="tel"]:focus,
-		select:focus,
-		textarea:focus {
-			border-color: #5385c1;
-			box-shadow: 0 0 0 1px #5385c1;
-		}
 
 	.select-wrapper {
 		text-decoration: none;
@@ -2175,6 +2167,7 @@
 		color: #bbb !important;
 		opacity: 1.0;
 	}
+
 
 /* Box */
 
@@ -2935,9 +2928,10 @@
 	#banner {
 		padding: 26em 0 10em 0;
 		background-image: url('../../images/banner.jpg');
-		background-size: cover;
+		background-size: 100% 65%;
 		background-position: top;
 		background-repeat: no-repeat;
+		background-attachment: fixed;
 		text-align: center;
 	}
 
@@ -3063,3 +3057,212 @@
 		}
 
 	}
+/***************************/
+/*         MAIN           */
+/***************************/
+	/* encart article */
+#nav a {
+	margin: 0 20px;
+}
+#content {
+border:0px solid red;
+width:75%;
+display:block;
+margin:0 auto;
+}
+.mainTitre {
+
+}
+#main {
+
+	float:left;
+	width:70%;
+	border:0px solid red;
+
+}	
+#main .taille1 {
+	width:80%;
+	border:0px solid red;
+	float:left;
+}
+
+#main .taille2 {
+	width:100%;
+}
+
+#main_categories {
+	width: 30%;
+	float:left;
+	border:0px solid red;
+
+}
+#main_categories .main_cats {
+	width: 90%;
+}
+
+#main .button, #main_categories .button {
+		float: right;
+		margin:10px;
+}
+#content .main-encart2 {
+	width: 90%; 
+	float: left;
+}
+
+#footer {
+	clear:both;
+}
+
+	/* Gestion erreur formulaire */
+.retourEnvoiForm {
+	color:red;
+	margin-bottom: 20px;
+}
+.retourEnvoiFormok{
+	color:#0cad04;
+	margin-bottom: 20px;
+}
+
+		input[type="text"].error,
+		input[type="password"].error,
+		input[type="email"].error,
+		input[type="tel"].error,
+		input[type="checkbox"].error,
+		select.error,
+		textarea.error {
+			background:#fbd6d6; 
+		}
+
+	div.formChamp {
+		position:relative;
+	}
+
+	div.bulleErreur { 
+		position:absolute;
+    	display: inline-block;
+    	top:8px;left:22px;
+	    padding:5px 5px;
+	    height:22px;
+	    font-size:11px;line-height:11px;
+	    border-radius:5px;
+	    border:1px red solid;
+	    background:#fbd6d6;
+	}
+	div.bulleErreur:after { 
+     	content:'\25bc';
+     	position:absolute;
+     	left:20px; top:19px;
+     	color: red;
+	}
+
+	div.bulleErreur span b {
+		color: red;
+     	width:auto;background:none;display:inline; 
+	}
+
+		input[type="text"]:focus,
+		input[type="password"]:focus,
+		input[type="email"]:focus,
+		input[type="tel"]:focus,
+		select:focus,
+		textarea:focus {
+			border-color: #5385c1;
+			box-shadow: 0 0 0 1px #5385c1;
+		}
+/***************************/
+/*             ADMIN       */
+/***************************/
+	/* Barre de navigation */
+.administration #nav , .administration #connexion  {
+	text-align: center;
+}
+/* titre */
+.administration div h3  {
+	margin-top:60px;
+}
+
+/* nouvelle catégorie */
+
+.administration .table_row {
+width:80%;
+}
+
+.administration .newcat   {
+	display: block;
+	float:right;
+}
+.administration .newcat .formChamp, 
+.administration .newcat .boutChamp    {
+		float:left;
+}
+
+
+.administration .newcat .formChamp input   {
+	width: 800px;
+	height: 2em;
+}
+
+.administration .newcat .boutChamp input  {
+	height: 2em;
+	line-height: 2em;
+}
+
+.administration .newcat .formChamp	div.bulleErreur { 
+	top:-25px;
+}
+
+/* article */
+.administration .articles .boutNouveau {
+	text-align: right;
+}
+
+.administration .article .formArticle {
+	float:none;
+}
+
+.administration .article input[type='submit'] {
+	float:right;
+}
+ /* responsive */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
+			.administration .newcat .formChamp input   {
+				width: 400px;
+			}
+
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			.administration .newcat .formChamp input   {
+				width: 600px;
+			}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			.administration .newcat .formChamp input   {
+				width: 400px;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.administration .newcat .formChamp input   {
+				width: 200px;
+			}
+
+		}
+
+		@media screen and (max-width: 480px) {
+
+			.administration .newcat .formChamp input   {
+				width: 200px;
+			}
+
+		}
+
+
+
