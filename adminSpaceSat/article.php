@@ -208,7 +208,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                             </div>
 
                             <div class="12u$">
-                                <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?enregistrer:nouveau; ?>" />
+                                <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?'enregistrer':'nouveau'; ?>" />
                             </div>
                   </div>
               </form>
