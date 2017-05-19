@@ -168,7 +168,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                                 </div>
 
                                 <div class="boutChamp">
-                                    <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?enregistrer:nouveau; ?>" />
+                                    <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?'enregistrer':'nouveau'; ?>" />
                                 </div>
                               </div>
                             </form>
