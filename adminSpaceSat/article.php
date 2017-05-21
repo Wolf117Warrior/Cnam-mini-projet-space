@@ -175,6 +175,7 @@ if(isset($_POST['Envoie'])){
             imagejpeg ($nouvelle_image , '../medias/'.$nom_p.'.jpg' , 100);
 
             imagedestroy($source);
+            imagedestroy($nouvelle_image);
             unlink('../medias/'.$nom.$extension);
 
         }
@@ -279,9 +280,9 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                             <span class="image fit">
                             <?php 
                               $nom_img = formateNomImage($titre);
-                              $img_o = '../medias/'.$id.'-'.$nom_img.'-o.jpg?v='.filemtime('../medias/'.$id.'-'.$nom_img.'-o.jpg');
-                              $img_m = '../medias/'.$id.'-'.$nom_img.'-m.jpg?v='.filemtime('../medias/'.$id.'-'.$nom_img.'-m.jpg');
-                              $img_p = '../medias/'.$id.'-'.$nom_img.'-p.jpg?v='.filemtime('../medias/'.$id.'-'.$nom_img.'-p.jpg');
+                              $img_o = './medias/'.$id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-o.jpg'):'');
+                              $img_m = './medias/'.$id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-m.jpg'):'');
+                              $img_p = './medias/'.$id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')); 
                             ?>
                               <img src="<?php echo ($photo?$img_p:'../medias/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">

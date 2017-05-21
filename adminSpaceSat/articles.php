@@ -186,9 +186,9 @@ include_once("../config/ConnexionBdd.php");
                         <td>
                     <?php 
                               $nom_img = formateNomImage($article_titre);
-                              $img_o = '../medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-o.jpg');
-                              $img_m = '../medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-m.jpg');
-                              $img_p = '../medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-p.jpg');
+                              $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
+                              $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
+                              $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('../medias/'.$article_id.'-'.$nom_img.'-p.jpg')); 
                     ?>
                           <img src="<?php echo ($photo?$img_p:'../medias/no_pic.jpg'); ?>" style="width:80px;height:40px" alt="">

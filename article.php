@@ -106,9 +106,9 @@ if(isset($id)){
           <?php echo date_format(new DateTime($date), 'd/m/Y H:i:s'); ?>
            <?php 
                   $nom_img = formateNomImage($titre);
-                  $img_o = './medias/'.$id.'-'.$nom_img.'-o.jpg?v='.filemtime('./medias/'.$id.'-'.$nom_img.'-o.jpg');
-                  $img_m = './medias/'.$id.'-'.$nom_img.'-m.jpg?v='.filemtime('./medias/'.$id.'-'.$nom_img.'-m.jpg');
-                  $img_p = './medias/'.$id.'-'.$nom_img.'-p.jpg?v='.filemtime('./medias/'.$id.'-'.$nom_img.'-p.jpg');
+                  $img_o = './medias/'.$id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-o.jpg'):'');
+                  $img_m = './medias/'.$id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-m.jpg'):'');
+                  $img_p = './medias/'.$id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$id.'-'.$nom_img.'-p.jpg'):'');
                   $photo = (file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')); 
           ?>
           <span class="image fit">

@@ -113,10 +113,11 @@ function tronqueTexte($texte,$long){
           <h3><?php echo $article['TITRE_article']; ?></h3>
           <?php 
                     $nom_img = formateNomImage($article['TITRE_article']);
-                    $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg');
-                    $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg');
-                    $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg');
+                    $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
+                    $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
+                    $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
                     $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
+
           ?>
           <span class="image fit"><img src="<?php echo ($photo?($i==1?$img_m:$img_p):'./images/pic01.jpg'); ?>" alt=""></span>
           <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
