@@ -1,11 +1,11 @@
-<?php //Affichage erreur validation formulaire
-function setClassErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'class="error"':'');  
-}
-function setBulleErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'<div id="bulleErreur" class="bulleErreur"><span><b>'.$GLOBALS["erreurs"][$champs].'</b></span></div>':'');  
-}
+<?php 
+//=========================================================
+// fonctions
+//=========================================================
+include_once("./config/fonctions.php");
+//=========================================================
 // Vérification Formulaire avant soumission
+//=========================================================
 if(isset($_POST['Envoie'])){
 
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : message non envoyé</div>';

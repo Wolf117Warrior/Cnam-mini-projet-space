@@ -15,46 +15,19 @@ if(isset($_GET['deconnexion'])) :
         header('location:index.php');
 endif ;
 //=========================================================
-//Affichage erreur validation formulaire
+// conexion Bdd
 //=========================================================
-function setClassErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'class="error"':'');  
-}
-function setBulleErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'<div id="bulleErreur" class="bulleErreur"><span><b>'.$GLOBALS["erreurs"][$champs].'</b></span></div>':'');  
-}
-// supprime accents utf8
-function str_to_noaccent($str){
-    $str = preg_replace('#Ç#', 'C', $str);
-    $str = preg_replace('#ç#', 'c', $str);
-    $str = preg_replace('#è|é|ê|ë#', 'e', $str);
-    $str = preg_replace('#È|É|Ê|Ë#', 'E', $str);
-    $str = preg_replace('#à|á|â|ã|ä|å#', 'a', $str);
-    $str = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $str);
-    $str = preg_replace('#ì|í|î|ï#', 'i', $str);
-    $str = preg_replace('#Ì|Í|Î|Ï#', 'I', $str);
-    $str = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $str);
-    $str = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $str);
-    $str = preg_replace('#ù|ú|û|ü#', 'u', $str);
-    $str = preg_replace('#Ù|Ú|Û|Ü#', 'U', $str);
-    $str = preg_replace('#ý|ÿ#', 'y', $str);
-    $str = preg_replace('#Ý#', 'Y', $str);
-    return ($str);
-}
-// formate chaine utf8 bdd pour nom image 
-//str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-"  
-function formateNomImage($str){
-  return preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str)));
-}
+include_once("../config/ConnexionBdd.php");
+//=========================================================
+// fonctions
+//=========================================================
+include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
 if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
-//=========================================================
-// conexion Bdd
-//=========================================================
-include_once("../config/ConnexionBdd.php");
+
 //=========================================================
 //===== post formulaire ==========
 //=========================================================

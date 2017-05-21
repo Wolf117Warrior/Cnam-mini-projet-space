@@ -13,35 +13,14 @@ if(isset($_GET['deconnexion'])) :
         session_destroy();
         header('location:index.php');
 endif ;
-// supprime accents utf8
-function str_to_noaccent($str){
-    $str = preg_replace('#Ç#', 'C', $str);
-    $str = preg_replace('#ç#', 'c', $str);
-    $str = preg_replace('#è|é|ê|ë#', 'e', $str);
-    $str = preg_replace('#È|É|Ê|Ë#', 'E', $str);
-    $str = preg_replace('#à|á|â|ã|ä|å#', 'a', $str);
-    $str = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $str);
-    $str = preg_replace('#ì|í|î|ï#', 'i', $str);
-    $str = preg_replace('#Ì|Í|Î|Ï#', 'I', $str);
-    $str = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $str);
-    $str = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $str);
-    $str = preg_replace('#ù|ú|û|ü#', 'u', $str);
-    $str = preg_replace('#Ù|Ú|Û|Ü#', 'U', $str);
-    $str = preg_replace('#ý|ÿ#', 'y', $str);
-    $str = preg_replace('#Ý#', 'Y', $str);
-    return ($str);
-}
-// formate chaine utf8 bdd pour nom image 
-//str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-"  
-function formateNomImage($str){
-  return preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str)));
-}
 //=========================================================
-// fonction tronquer texte long
+// conexion Bdd
 //=========================================================
-function tronqueTexte($texte,$long){
-  return mb_strimwidth($texte, 0, $long, ' ...');
-}
+include_once("../config/ConnexionBdd.php");
+//=========================================================
+// fonctions
+//=========================================================
+include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
@@ -51,10 +30,7 @@ if(isset($_GET["selcat"]))     $selcat = htmlentities($_GET["selcat"], ENT_QUOTE
 if(isset($_GET["col"]))     $col = htmlentities($_GET["col"], ENT_QUOTES);
 if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
 else $tri = 'asc';
-//=========================================================
-// conexion Bdd
-//=========================================================
-include_once("../config/ConnexionBdd.php");
+
 //=========================================================
 //===== SUPPRIMER : delete article Bdd ==========
 //=========================================================

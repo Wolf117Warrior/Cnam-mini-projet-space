@@ -17,15 +17,13 @@ if(isset($_GET['deconnexion'])) :
         header('location:index.php');
 endif ;
 //=========================================================
-// fonction tronquer texte long
-//=========================================================
-function tronqueTexte($texte,$long){
-  return mb_strimwidth($texte, 0, $long, ' ...');
-}
-//=========================================================
 // conexion Bdd
 //=========================================================
 include_once("../config/ConnexionBdd.php");
+//=========================================================
+// fonctions
+//=========================================================
+include_once("../config/fonctions.php");
 ?><!DOCTYPE HTML>
 <!--
 	Theory by TEMPLATED

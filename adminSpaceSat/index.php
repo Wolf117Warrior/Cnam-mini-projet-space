@@ -7,7 +7,8 @@ if(isset($_GET['deconnexion'])) :
         session_destroy();
         header('location:index.php');
 endif ;
-
+//------------- Fonctions ------------//
+include("../config/ConnexionBdd.php");
 //Affichage erreur validation formulaire
 function setClassErreur($champs){
    echo (isset($GLOBALS["erreurs"][$champs])?'class="error"':'');  

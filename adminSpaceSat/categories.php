@@ -15,14 +15,13 @@ if(isset($_GET['deconnexion'])) :
         header('location:index.php');
 endif ;
 //=========================================================
-//Affichage erreur validation formulaire
+// conexion Bdd
 //=========================================================
-function setClassErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'class="error"':'');  
-}
-function setBulleErreur($champs){
-   echo (isset($GLOBALS["erreurs"][$champs])?'<div id="bulleErreur" class="bulleErreur"><span><b>'.$GLOBALS["erreurs"][$champs].'</b></span></div>':'');  
-}
+include_once("../config/ConnexionBdd.php");
+//=========================================================
+// Fonctions
+//=========================================================
+include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
@@ -30,10 +29,6 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
 if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
 else $tri = 'asc';
-//=========================================================
-// conexion Bdd
-//=========================================================
-include_once("../config/ConnexionBdd.php");
 //=========================================================
 //===== post formulaire ==========
 //=========================================================
