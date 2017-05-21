@@ -37,6 +37,12 @@ function formateNomImage($str){
   return preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str)));
 }
 //=========================================================
+// fonction tronquer texte long
+//=========================================================
+function tronqueTexte($texte,$long){
+  return mb_strimwidth($texte, 0, $long, ' ...');
+}
+//=========================================================
 //===== init ==========
 //=========================================================
 if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
@@ -194,7 +200,7 @@ include_once("../config/ConnexionBdd.php");
                           <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="width:80px;height:40px" alt="">
                         </td>
                         <td><?php echo $article_titre; ?> </td>
-                        <td><?php echo $article['CONTENT_article']; ?></td>
+                        <td><?php echo tronqueTexte($article['CONTENT_article'],140); ?></td>
                         <td><?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?></td>
                         <td><?php echo $article['LIBL_categorie']; ?></td>
                         <td><a href="article.php?action=modifier&id=<?php echo $article_id; ?>" class="button small">modifier</a></td>

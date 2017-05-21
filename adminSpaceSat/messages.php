@@ -19,8 +19,8 @@ endif ;
 //=========================================================
 // fonction tronquer texte long
 //=========================================================
-function tronqueTexte($texte){
-  return mb_strimwidth($texte, 0, 200, ' ...');
+function tronqueTexte($texte,$long){
+  return mb_strimwidth($texte, 0, $long, ' ...');
 }
 //=========================================================
 // conexion Bdd
@@ -111,7 +111,7 @@ include_once("../config/ConnexionBdd.php");
                         <td><?php echo $message['OBJET_message']; ?></td>
                         <td width="600">
                           <div>
-                          <div id="message_off" onclick="openMessage(this)"><?php echo tronqueTexte($message['TEXT_message']); ?></div>
+                          <div id="message_off" onclick="openMessage(this)"><?php echo tronqueTexte($message['TEXT_message'],200); ?></div>
                           <div style="display:none" id="message_on" onclick="closeMessage(this)"><?php echo $message['TEXT_message']; ?></div>
                         </div>
                         </td>
