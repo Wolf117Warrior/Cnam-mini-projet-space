@@ -14,7 +14,7 @@ if(isset($_POST['Envoie'])){
      $email     =  htmlentities($_POST['email'],  ENT_QUOTES);
      $objet     =  htmlentities($_POST['objet'], ENT_QUOTES);
      $message   =  htmlentities($_POST['message'],   ENT_QUOTES);
-     $human     =  htmlentities($_POST['human'],   ENT_QUOTES);
+     $human     =  htmlentities(isset($_POST['human'])?$_POST['human']:'',   ENT_QUOTES);
      
      // Nom
      if(empty($nom))   

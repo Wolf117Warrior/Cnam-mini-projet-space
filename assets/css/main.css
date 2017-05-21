@@ -3060,6 +3060,10 @@
 /***************************/
 /*         MAIN           */
 /***************************/
+#one {
+	padding-top:80px;
+	padding-bottom:50px;
+}
 /* encart article */
 #nav a {
 	margin: 0 20px;
@@ -3082,7 +3086,8 @@ h3.titre	{
 	margin-bottom:8px;
 }
 .article-spacer{
-	margin-bottom:40px;
+	margin-bottom:30px;
+	padding-bottom:30px;
 	border-bottom: solid 1px #dbdbdb;
 }
 #content {
@@ -3323,8 +3328,14 @@ float:left;
 	width:10%;
 }
 #recherche input[type='submit'] {
-padding:0;
-	}
+	padding:0;
+}
+.motrech {
+color:#FD8E39;
+}
+.countrech {
+color:#FD8E39;
+}
 
  /* responsive */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {

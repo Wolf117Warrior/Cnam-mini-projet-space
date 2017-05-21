@@ -9,7 +9,7 @@ include("./config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES); 
+if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTES); 
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -57,7 +57,7 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
     <form method="post" action="searchengine.php">
       <div class="row uniform recherche-container">
         <div class="9u 12u$(small)  recherche-query">
-          <input type="text" name="query" id="query" value="" placeholder="Mots clés ...">
+          <input type="text" name="query" id="query" value="<?php echo isset($query)?html_entity_decode($query):''; ?>" placeholder="Mots clés ...">
         </div>
         <div class="3u$ 12u$(small) recherche-bouton">
           <input type="submit" value="Rechercher" class="fit">
@@ -68,7 +68,6 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 </section>
 
 <section id="content">
-<h3>Résultat de recherche</h3>
 <section id="main" class="article-wrapper">
 
   <div class="inner taille1">
@@ -77,7 +76,12 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
         //--------------------------------// 
         $result=$maBase->query("SELECT a.*, c.LIBL_categorie  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 
-                WHERE c.LIBL_categorie IS NOT NULL ".(isset($id)?"AND a.ID_categorie='{$id}'":'')."  ORDER BY DATE_article DESC"); 
+                WHERE c.LIBL_categorie IS NOT NULL 
+                AND (lower(CONVERT(c.LIBL_categorie USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8))  
+                  OR lower(CONVERT(a.TITRE_article USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8)) 
+                  OR lower(CONVERT(a.CONTENT_article USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8)) )
+                ORDER BY DATE_article DESC"); 
+                
             $i = 0;
             $count=$result->rowCount() ;
                          if($result) {  
@@ -86,7 +90,11 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
                                 $article_id = $article['ID_article'];
                                 $article_titre = $article['TITRE_article'];
             ?>
-<?php if($i==1||$i%4==0) { ?>
+<?php if($i==1) { ?>
+    <h3>Résultat de recherche :  
+      <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> articles trouvés
+    </h3>
+<?php } if($i==1||$i%4==0) { ?>
       <div class="row article-spacer">
 <?php } ?>
 
@@ -119,7 +127,12 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 <?php } ?>
               <?php           } 
                       }   
-                      if($count==0)  echo "<div class='row'>pas d'articles</div>";
+                      if($count==0) {  ?>
+                        <h3>Résultat de recherche :  
+                        <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> articles trouvés
+                        </h3>
+                          </span><div class='row'>pas d'articles</div>
+             <?php         }  
               ?>
 
 
