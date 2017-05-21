@@ -40,9 +40,10 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 </header>
 
 
+<!-- NAVBAR -->
 <section id="one" class="wrapper">
-
-  <div class="inner">
+  <!-- NAVBAR -->
+  <div id="navbar" class="inner">
     <nav id="nav">
       <a href="index.php">Accueil</a>
       <a href="blog.php">Blog</a>
@@ -50,10 +51,24 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
       <a href="contact.php">Contact</a>
     </nav>
   </div>
+
+<!-- Formulaire de recherche -->
+  <div id="recherche" class="inner">
+    <form method="post" action="searchengine.php">
+      <div class="row uniform recherche-container">
+        <div class="9u 12u$(small)  recherche-query">
+          <input type="text" name="query" id="query" value="" placeholder="Mots clés ...">
+        </div>
+        <div class="3u$ 12u$(small) recherche-bouton">
+          <input type="submit" value="Rechercher" class="fit">
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
 
 <section id="content">
-
+<h3>Blog</h3>
 <section id="main" class="article-wrapper">
 
   <div class="inner taille1">
@@ -72,13 +87,13 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
                                 $article_titre = $article['TITRE_article'];
             ?>
 <?php if($i==1||$i%4==0) { ?>
-      <div class="row">
+      <div class="row article-spacer">
 <?php } ?>
 
         <div class="4u<?php echo ($i%3==0?'$':''); ?> 12u$(medium)">
-          <h2>Catégorie : </h2>
-          <p><?php echo $article['LIBL_categorie']; ?></p>
-          <h3><?php echo $article['TITRE_article']; ?></h3>
+          <h4 class="cat">Catégorie : </h4>
+          <p class="cat"><?php echo $article['LIBL_categorie']; ?></p>
+          <h3 class="titre"><?php echo $article['TITRE_article']; ?></h3>
 
           <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
 

@@ -40,15 +40,30 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 </header>
 
 
+<!-- NAVBAR -->
 <section id="one" class="wrapper">
-
-  <div class="inner">
+  <!-- NAVBAR -->
+  <div id="navbar" class="inner">
     <nav id="nav">
       <a href="index.php">Accueil</a>
       <a href="blog.php">Blog</a>
       <a href="portofolio.php">Portofolio</a>
       <a href="contact.php">Contact</a>
     </nav>
+  </div>
+
+<!-- Formulaire de recherche -->
+  <div id="recherche" class="inner">
+    <form method="post" action="searchengine.php">
+      <div class="row uniform recherche-container">
+        <div class="9u 12u$(small)  recherche-query">
+          <input type="text" name="query" id="query" value="" placeholder="Mots clés ...">
+        </div>
+        <div class="3u$ 12u$(small) recherche-bouton">
+          <input type="submit" value="Rechercher" class="fit">
+        </div>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -79,8 +94,9 @@ if(isset($id)){
 
       <div class="row">
         <div class="12u$(small)">
-          <p><?php echo $categorie; ?></p>
-          <h3><?php echo isset($titre)?html_entity_decode($titre):''; ?></h3>
+          <h4 class="cat">Catégorie : </h4>
+          <p class="cat"><?php echo $categorie; ?></p>
+          <h3 class="titre"><?php echo isset($titre)?html_entity_decode($titre):''; ?></h3>
           <?php echo date_format(new DateTime($date), 'd/m/Y H:i:s'); ?>
            <?php 
                   $nom_img = formateNomImage($titre);

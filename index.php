@@ -35,10 +35,10 @@ date_default_timezone_set('America/Martinique');
   </div>
 </header>
 
-
+<!-- NAVBAR -->
 <section id="one" class="wrapper">
-
-  <div class="inner">
+  <!-- NAVBAR -->
+  <div id="navbar" class="inner">
     <nav id="nav">
       <a href="index.php">Accueil</a>
       <a href="blog.php">Blog</a>
@@ -46,10 +46,24 @@ date_default_timezone_set('America/Martinique');
       <a href="contact.php">Contact</a>
     </nav>
   </div>
+
+<!-- Formulaire de recherche -->
+  <div id="recherche" class="inner">
+    <form method="post" action="searchengine.php">
+      <div class="row uniform recherche-container">
+        <div class="9u 12u$(small)  recherche-query">
+          <input type="text" name="query" id="query" value="" placeholder="Mots clés ...">
+        </div>
+        <div class="3u$ 12u$(small) recherche-bouton">
+          <input type="submit" value="Rechercher" class="fit">
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
 
 <section id="content">
-
+<h3>Accueil</h3>
 <section id="main" class="article-wrapper">
 
   <div class="inner taille1">
@@ -80,9 +94,10 @@ date_default_timezone_set('America/Martinique');
       <div class="row">
 <?php } ?>
 
-        <div class="<?php echo ($i%2==0?'6u':($i%3==0?'6u$':'taille2')); ?> 12u$(small)">
-          <p><?php echo $article['LIBL_categorie']; ?></p>
-          <h3><?php echo $article['TITRE_article']; ?></h3>
+        <div class="<?php echo ($i%2==0?'6u':($i%3==0?'6u$':'taille2')); ?> 12u$(small) article-spacer">
+          <h4 class="cat">Catégorie : </h4>
+          <p class="cat"><?php echo $article['LIBL_categorie']; ?></p>
+          <h3 class="titre"><?php echo $article['TITRE_article']; ?></h3>
           <?php 
                     $nom_img = formateNomImage($article['TITRE_article']);
                     $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
@@ -91,8 +106,9 @@ date_default_timezone_set('America/Martinique');
                     $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
 
           ?>
-          <span class="image fit"><img src="<?php echo ($photo?($i==1?$img_m:$img_p):'./images/no_pic.jpg'); ?>" alt=""></span>
           <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
+          <span class="image fit"><img src="<?php echo ($photo?($i==1?$img_m:$img_p):'./images/no_pic.jpg'); ?>" alt=""></span>
+          
           <p>
             <?php echo tronqueTexte($article['CONTENT_article'],800); ?>
             <a href="article.php?id=<?php echo $article_id; ?>" class="button special small">Lire la suite</a>
