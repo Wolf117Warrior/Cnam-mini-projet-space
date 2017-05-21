@@ -7,6 +7,7 @@ function str_to_noaccent($str){
     $str = preg_replace('#È|É|Ê|Ë#', 'E', $str);
     $str = preg_replace('#à|á|â|ã|ä|å#', 'a', $str);
     $str = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $str);
+    $str = preg_replace('#ì|í|î|ï#', 'i', $str);
     $str = preg_replace('#Ì|Í|Î|Ï#', 'I', $str);
     $str = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $str);
     $str = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $str);
