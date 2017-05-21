@@ -115,7 +115,7 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
                   $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
                   $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
                   $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
-                  $$photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
+                  $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
           ?>
           <span class="image fit">
             <img src="<?php echo ($photo?$img_m:'./medias/no_pic.jpg'); ?>" alt="">
