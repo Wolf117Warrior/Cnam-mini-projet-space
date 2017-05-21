@@ -112,7 +112,7 @@ if(isset($id)){
                   $photo = (file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')); 
           ?>
           <span class="image fit">
-            <img src="<?php echo ($photo?$img_m:'./medias/no_pic.jpg'); ?>" alt="">
+            <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="">
           </span>
 
           <p><?php echo isset($contenu)?html_entity_decode($contenu):''; ?></p>

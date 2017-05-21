@@ -119,7 +119,7 @@ function tronqueTexte($texte,$long){
                     $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
 
           ?>
-          <span class="image fit"><img src="<?php echo ($photo?($i==1?$img_m:$img_p):'./images/pic01.jpg'); ?>" alt=""></span>
+          <span class="image fit"><img src="<?php echo ($photo?($i==1?$img_m:$img_p):'./images/no_pic.jpg'); ?>" alt=""></span>
           <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
           <p>
             <?php echo tronqueTexte($article['CONTENT_article'],800); ?>

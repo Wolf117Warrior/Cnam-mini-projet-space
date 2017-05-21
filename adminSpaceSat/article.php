@@ -285,8 +285,8 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                               $img_p = '../medias/'.$id.'-'.$nom_img.'-p.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')); 
                             ?>
-                              <img src="<?php echo ($photo?$img_p:'../medias/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">
-                              <img src="<?php echo ($photo?$img_m:'../medias/no_pic.jpg'); ?>" style="max-width:576px" alt="">
+                              <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">
+                              <img src="<?php echo ($photo?$img_m:'../images/no_pic.jpg'); ?>" style="max-width:576px" alt="">
                             </span>
                           </div>
                           <div class="12u$(xsmall) formChamp formArticle supprimer">
@@ -331,7 +331,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                             </div>
 
                             <span class="image fit">
-                              <img src="<?php echo ($photo?$img_o:'../medias/no_pic.jpg'); ?>" style="max-width:800px" alt="">
+                              <img src="<?php echo ($photo?$img_o:'../images/no_pic.jpg'); ?>" style="max-width:800px" alt="">
                             </span>
                   </div>
               </form>
