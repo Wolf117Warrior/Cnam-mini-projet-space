@@ -89,7 +89,7 @@ if(isset($_POST['Envoie'])){
 
 <!-- Form -->
 
-</section id="contact" class="content-wrapper">
+<section id="contact" class="content-wrapper">
 <div class="inner">
 
 

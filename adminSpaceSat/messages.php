@@ -2,18 +2,29 @@
 session_start();
 // fuseau horaire 
 date_default_timezone_set('America/Martinique'); 
-//--- redirection User non authentifié  ---//
+//============================================================
+//------------- redirection User non authentifié ------------//
+//============================================================ 
 if(!isset($_SESSION['authenticate']) ) 
   header("location:index.php");
-
 $access = 'admin';
+//=======================================
 //------------- Déconnexion ------------//
+//=======================================
 if(isset($_GET['deconnexion'])) :
   unset($_SESSION['authenticate']);
         session_destroy();
         header('location:index.php');
 endif ;
-//conexion Bdd
+//=========================================================
+// fonction tronquer texte long
+//=========================================================
+function tronqueTexte($texte){
+  return mb_strimwidth($texte, 0, 200, ' ...');
+}
+//=========================================================
+// conexion Bdd
+//=========================================================
 include_once("../config/ConnexionBdd.php");
 ?><!DOCTYPE HTML>
 <!--
@@ -50,7 +61,7 @@ include_once("../config/ConnexionBdd.php");
 
 <!-- Form -->
 
-</section id="contact" class="content-wrapper">
+<section id="contact" class="content-wrapper">
 <div class="inner">
             
             <section id="one" class="row">
@@ -95,10 +106,15 @@ include_once("../config/ConnexionBdd.php");
                               while($message=$result->fetch()) {  ?>
 
                       <tr>
-                        <td><?php echo $message['NOM_message']; ?> </td>
-                        <td><?php echo $message['EMAIL_message']; ?></td>
+                        <td><?php echo $message['NOM_message']; ?></td>
+                        <td><a href="mailto:<?php echo $message['EMAIL_message']; ?>"><?php echo $message['EMAIL_message']; ?></a></td>
                         <td><?php echo $message['OBJET_message']; ?></td>
-                        <td><?php echo $message['TEXT_message']; ?></td>
+                        <td width="600">
+                          <div>
+                          <div id="message_off" onclick="openMessage(this)"><?php echo tronqueTexte($message['TEXT_message']); ?></div>
+                          <div style="display:none" id="message_on" onclick="closeMessage(this)"><?php echo $message['TEXT_message']; ?></div>
+                        </div>
+                        </td>
                         <td><?php echo date_format(new DateTime($message['DATE_message']), 'd/m/Y H:i:s'); ?></td>
                       </tr>
             <?php } }  ?>

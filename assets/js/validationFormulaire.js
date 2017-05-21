@@ -6,6 +6,7 @@ window.onload=function(){
 	//=============================================
 	//====== FONCTION :Submit =====================
 	//=============================================
+	if(document.forms[1]!=null)
 	document.forms[0].onsubmit = function(form) {  console.log('submit');
 
 		//reset erreurs formulaire
@@ -97,6 +98,17 @@ window.onload=function(){
 			//== contenu ==
 			if(document.forms[0].contenu.value=="")
 				tab_erreur['contenu']="<b>Contenu</b> obligatoire";
+
+			//== photo ==
+			if(document.forms[0].photo.value!=""){  
+				var img = new Image();
+				console.log(document.forms[0].photo.files[0]);
+				if(document.forms[0].photo.files[0].size>2000000)
+					tab_erreur['photo']="<b>Photo</b> max 2Mo";
+
+			}
+
+				
 	
 		}
 
@@ -120,7 +132,9 @@ window.onload=function(){
 				return false;
         return true;
 	}
-	
+
+
+			
 
 }
 
@@ -131,4 +145,20 @@ window.onload=function(){
 		if(confirm("Voulez vous supprimer "+decodeURIComponent(legende)+" ? "))
 				window.location=param ;
 	}
+
+
+	//=============================================
+	//====== FONCTION :Click message =====================
+	//=============================================
+	function openMessage(obj){
+		obj.setAttribute('style','display:none');
+		obj.parentNode.childNodes[2].nextElementSibling.setAttribute('style','display:visible');
+	}
+
+	function closeMessage(obj){
+		obj.setAttribute('style','display:none');
+		obj.parentNode.childNodes[2].previousElementSibling.setAttribute('style','display:visible');
+	}
+
+
 

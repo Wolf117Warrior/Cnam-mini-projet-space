@@ -13,13 +13,41 @@ if(isset($_GET['deconnexion'])) :
         session_destroy();
         header('location:index.php');
 endif ;
+// supprime accents utf8
+function str_to_noaccent($str){
+    $str = preg_replace('#Ç#', 'C', $str);
+    $str = preg_replace('#ç#', 'c', $str);
+    $str = preg_replace('#è|é|ê|ë#', 'e', $str);
+    $str = preg_replace('#È|É|Ê|Ë#', 'E', $str);
+    $str = preg_replace('#à|á|â|ã|ä|å#', 'a', $str);
+    $str = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $str);
+    $str = preg_replace('#ì|í|î|ï#', 'i', $str);
+    $str = preg_replace('#Ì|Í|Î|Ï#', 'I', $str);
+    $str = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $str);
+    $str = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $str);
+    $str = preg_replace('#ù|ú|û|ü#', 'u', $str);
+    $str = preg_replace('#Ù|Ú|Û|Ü#', 'U', $str);
+    $str = preg_replace('#ý|ÿ#', 'y', $str);
+    $str = preg_replace('#Ý#', 'Y', $str);
+    return ($str);
+}
+// formate chaine utf8 bdd pour nom image 
+//str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-"  
+function formateNomImage($str){
+  return preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str)));
+}
 //=========================================================
 //===== init ==========
 //=========================================================
 if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
+if(isset($_GET["selcat"]))     $selcat = htmlentities($_GET["selcat"], ENT_QUOTES);
+if(isset($_GET["col"]))     $col = htmlentities($_GET["col"], ENT_QUOTES);
 if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
-//conexion Bdd
+else $tri = 'asc';
+//=========================================================
+// conexion Bdd
+//=========================================================
 include_once("../config/ConnexionBdd.php");
 //=========================================================
 //===== SUPPRIMER : delete article Bdd ==========
@@ -65,7 +93,7 @@ include_once("../config/ConnexionBdd.php");
 
 <!-- Form -->
 
-</section id="contact" class="content-wrapper">
+<section id="articles" class="content-wrapper">
 <div class="inner">
             
             <section id="one" class="row">
@@ -88,13 +116,13 @@ include_once("../config/ConnexionBdd.php");
 
           <!-- messages -->
           <section id="one">
-            <div class="inner articles">
+            <div class="inner">
               <h3>Liste des articles</h3>
 
                       <div class="12u$ formChamp">
                             <div class="select-wrapper ">
-                                <select name="categorie" id="categorie" onchange="javascript:window.location='articles.php?tri='+this.value;">
-                                  <option value='toutes'>Toutes les Catégories</option>
+                                <select name="categorie" id="categorie" onchange="javascript:window.location='articles.php?selcat='+this.value;">
+                                  
                                   <?php  //--- affichage liste catégories ---//
                                         //$result=$maBase->query('SELECT * FROM cnamcp09_categories ORDER BY LIBL_categorie DESC'); 
                                         $result=$maBase->query('SELECT  c.LIBL_categorie, c.ID_categorie, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
@@ -102,10 +130,12 @@ include_once("../config/ConnexionBdd.php");
                                                                 UNION
                                                               SELECT  IFNULL(c.LIBL_categorie ,"Sans catégorie"), IFNULL(a.ID_categorie ,"sans"), COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
                                                                   FROM cnamcp09_categories c  RIGHT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie GROUP BY 1,2 ');
-                                        $count=$result->rowCount(); 
+                                        $count=$result->rowCount(); ?>
+                                        <option value='toutes'>Toutes les Catégories - (<?php echo $count; ?> articles)</option>
+                                  <?php
                                         if($result) { 
                                           while($cat=$result->fetch()) {      ?>
-                                  <option <?php echo (isset($tri)&&$tri==$cat['ID_categorie']?'selected':'');?> 
+                                  <option <?php echo (isset($selcat)&&$selcat==$cat['ID_categorie']?'selected':'');?> 
                                     value="<?php echo $cat['ID_categorie']; ?>"><?php echo $cat['LIBL_categorie'].'   - ('.$cat['Nb_articles'].' articles)'; ?>
                                   </option>
                                   <?php   }   }    ?>
@@ -127,10 +157,10 @@ include_once("../config/ConnexionBdd.php");
                     <thead>
                       <tr>
                         <th></th>
-                        <th>Titre</th>
+                        <th><a href="articles.php?<?php echo (isset($selcat)?'selcat='.$selcat.'&':'') ?>col=titre&tri=<?php echo ($tri=='asc'?'desc':'asc'); ?>">Titre</a></th>
                         <th>Contenu</th>
-                        <th>Catégorie</th>
-                        <th>Date</th>
+                        <th><a href="articles.php?<?php echo (isset($selcat)?'selcat='.$selcat.'&':'') ?>col=date&tri=<?php echo ($tri=='asc'?'desc':'asc'); ?>">Date</a></th>
+                        <th><a href="articles.php?<?php echo (isset($selcat)?'selcat='.$selcat.'&':'') ?>col=cat&tri=<?php echo ($tri=='asc'?'desc':'asc'); ?>">Catégorie</a></th>
                         <th></th>
                         <th></th>
                       </tr>
@@ -139,24 +169,36 @@ include_once("../config/ConnexionBdd.php");
             <?php  //--------------------------------//
                    //--- affichage liste articles ---//
                   //--------------------------------// 
-              $result=$maBase->query("SELECT a.*, IFNULL(c.LIBL_categorie ,'sans catégorie')  AS 'LIBL_categorie'
+               $result=$maBase->query("SELECT a.*, IFNULL(c.LIBL_categorie ,'sans catégorie')  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie "
-              .(isset($tri)&&$tri=='toutes'||!isset($tri)?'':(isset($tri)&&$tri=='sans'?'WHERE a.ID_categorie IS NULL':'WHERE a.ID_categorie='.$tri))." ORDER BY DATE_article DESC"); 
+              .(isset($selcat)&&$selcat=='toutes'||!isset($selcat)?'':(isset($selcat)&&$selcat=='sans'?'WHERE a.ID_categorie IS NULL':'WHERE a.ID_categorie='.$selcat))
+              ." ORDER BY ".(isset($col)&&$col=='titre'?'TITRE_article':(isset($col)&&$col=='cat'?'LIBL_categorie':'DATE_article'))." ".(isset($tri)&&$tri=='asc'?'ASC':'DESC')); 
+
+
 
             $count=$result->rowCount() ;
                          if($result) { 
                               while($article=$result->fetch()) {  
                                 $article_id = $article['ID_article'];
-                                $art = $article['TITRE_article'];
+                                $article_titre = $article['TITRE_article'];
             ?>
                       <tr>
-                        <td><img src="../images/pic01.jpg" style="width:80px" alt=""></td>
-                        <td><?php echo $article['TITRE_article']; ?> </td>
+                        <td>
+                    <?php 
+                              $nom_img = formateNomImage($article_titre);
+                              $img_o = '../medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-o.jpg');
+                              $img_m = '../medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-m.jpg');
+                              $img_p = '../medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.filemtime('../medias/'.$article_id.'-'.$nom_img.'-p.jpg');
+                              $photo = (file_exists('../medias/'.$article_id.'-'.$nom_img.'-p.jpg')); 
+                    ?>
+                          <img src="<?php echo ($photo?$img_p:'../medias/no_pic.jpg'); ?>" style="width:80px;height:40px" alt="">
+                        </td>
+                        <td><?php echo $article_titre; ?> </td>
                         <td><?php echo $article['CONTENT_article']; ?></td>
                         <td><?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?></td>
                         <td><?php echo $article['LIBL_categorie']; ?></td>
                         <td><a href="article.php?action=modifier&id=<?php echo $article_id; ?>" class="button small">modifier</a></td>
-                        <td><a href=javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode($art); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>'); class="button small">supprimer</a></td>
+                        <td><a href=javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode($article_titre); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>'); class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
                       }   

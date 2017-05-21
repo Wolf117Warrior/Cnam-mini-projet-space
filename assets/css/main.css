@@ -3104,6 +3104,14 @@ margin:0 auto;
 		float: right;
 		margin:10px;
 }
+
+#main_categories a.lien-cat {
+	text-decoration:none;
+}
+#main_categories a.lien-cat:hover {
+	text-decoration:underline;
+}
+
 #content .main-encart2 {
 	width: 90%; 
 	float: left;
@@ -3169,6 +3177,9 @@ margin:0 auto;
 			border-color: #5385c1;
 			box-shadow: 0 0 0 1px #5385c1;
 		}
+
+
+
 /***************************/
 /*             ADMIN       */
 /***************************/
@@ -3212,16 +3223,69 @@ width:80%;
 }
 
 /* article */
-.administration .articles .boutNouveau {
+.administration #articles .boutNouveau {
 	text-align: right;
 }
 
-.administration .article .formArticle {
+.administration #article .formArticle {
 	float:none;
 }
 
-.administration .article input[type='submit'] {
+.administration #article input[type='submit'] {
 	float:right;
+}
+
+.administration #article .supprimer{
+float:left;
+}
+
+.administration #article .choix-photo{
+float:left;
+}
+.administration #article .choix-photo input.input-file {
+	pointer-events: none;
+	position: relative;
+	top:10px;
+	left:15px;
+	font-weight: 600;
+    padding: 0;
+}
+.administration #article .choix-photo input.input-file:before {
+	pointer-events: all;
+	content:'choisir une image';
+	display:inline-block;
+	position: absolute;
+	top:-10px;
+	left:-15px;
+	background: #5a5a5a;
+	color: #ffffff;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 600;
+    height: 2.85em;
+    line-height: 2.95em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+	}
+
+
+/* messages */
+.administration #message_off, .administration #message_on { 
+	pointer-events: none;
+}
+.administration #message_off:before { 
+	pointer-events: all;
+	cursor: pointer;
+    content:'\25ba';  
+    color: green;
+}
+.administration #message_on:before { 
+	pointer-events: all;
+	cursor: pointer;
+    content:'\25bc';  
+     color: blue;
 }
  /* responsive */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {

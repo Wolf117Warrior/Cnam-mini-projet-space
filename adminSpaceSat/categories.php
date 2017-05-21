@@ -28,7 +28,11 @@ function setBulleErreur($champs){
 //=========================================================
 if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
-//conexion Bdd
+if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
+else $tri = 'asc';
+//=========================================================
+// conexion Bdd
+//=========================================================
 include_once("../config/ConnexionBdd.php");
 //=========================================================
 //===== post formulaire ==========
@@ -130,7 +134,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
 
 <!-- Form -->
 
-</section id="contact" class="content-wrapper">
+<section id="contact" class="content-wrapper">
 <div class="inner">
 
             
@@ -192,7 +196,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
               <table>
                     <thead>
                       <tr>
-                        <th>Catégories (<?php echo $count; ?>) </th>
+                        <th><a href="categories.php?tri=<?php echo ($tri=='asc'?'desc':'asc'); ?>">Catégories (<?php echo $count; ?>)</a></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -202,14 +206,22 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                                   $catid = $categorie['ID_categorie'];
                                   $cat = $categorie['LIBL_categorie'];
                                   $total = $categorie['Nb_articles'];
-                      ?>
 
+                                if($catid==null) {    
+                      ?>
+                                  <tr>
+                                    <td class="table_row"><?php echo '<b>'.$cat.'</b>   - ('.$total.' articles)'; ?> </td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                      <?php } else { ?>
                       <tr>
-                        <td class="table_row"><?php echo '<b>'.$categorie['LIBL_categorie'].'</b>   - ('.$total.' articles)'; ?> </td>
+                        <td class="table_row"><?php echo '<b>'.$cat.'</b>   - ('.$total.' articles)'; ?> </td>
                         <td><a href="?action=modifier&id=<?php echo $catid; ?>" class="button small">modifier</a></td>
                         <td><a href=javascript:confirm_supprimer('la&nbsp;catégorie&nbsp;<?php echo rawurlencode($cat); ?>','categories.php?action=supprimer&id=<?php echo $catid; ?>'); class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
+                          }
                       }   
                       if($count==0)  echo "<tr><td>pas de catégories</td></tr>";
               ?>

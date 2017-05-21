@@ -3,10 +3,10 @@
 //---- Désactive le rapport d'erreurs par défaut pour affichage pesonnalisé----//
 //error_reporting(0);
 
-$Bdd_serveur='localhost' ; 
+/*$Bdd_serveur='localhost' ; 
 $Bdd_login='root' ;
 $Bdd_pwd='root' ;
-$Bdd_nom='werfl9_cnam_pro' ;
+$Bdd_nom='werfl9_cnam_pro' ;*/
 
 $Bdd_serveur='web2.pulseheberg.net' ; 
 $Bdd_login='werfl9_cnam_pro' ;
