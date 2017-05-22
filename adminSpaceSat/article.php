@@ -85,7 +85,7 @@ if(isset($_POST['Envoie'])){
             $retourEnvoiForm = '<div class="retourEnvoiFormok">L\'article a été modifiée avec succès</div>';
             // renommage photo
             foreach (glob('../medias/'.$id."*.jpg") as $filename) {
-              $nouveau_nom = '../medias/'.$id.'-'.formateNomImage(strtolower($titre).substr($filename, -6));
+              $nouveau_nom = '../medias/'.$id.'-'.formateNomImage($titre.substr($filename, -6));
               if(!file_exists($nouveau_nom))
                 rename($filename , $nouveau_nom);
             }
@@ -99,7 +99,7 @@ if(isset($_POST['Envoie'])){
      //echo ini_get('upload_max_filesize'), ", " , ini_get('post_max_size');
         $image_accept = array('image/jpeg','image/png');
         //str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-" 
-        $nom = formateNomImage(strtolower($titre));
+        $nom = formateNomImage($titre);
         $extension = strtolower(substr($_FILES['photo']['name'], strrpos($_FILES['photo']['name'], ".")));
 
         $nom = $id.'-'.$nom;

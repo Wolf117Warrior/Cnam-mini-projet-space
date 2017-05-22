@@ -29,7 +29,7 @@ function str_to_noaccent($str){
 // formate chaine utf8 bdd pour nom image 
 //str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-"  
 function formateNomImage($str){
-  return preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str)));
+  return strtolower(preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str))));
 }
 //=========================================================
 // fonction tronquer texte long
