@@ -3249,8 +3249,18 @@ width:80%;
 }
 
 /* article */
+.administration #articles .select-cat {
+	width:81%;
+	float:left;
+}
 .administration #articles .boutNouveau {
-	text-align: right;
+	float: right;
+	margin-right: 20px;
+}
+
+.table-wrapper{
+	clear: both;
+	margin-top:50px;
 }
 
 .administration #article .formArticle {

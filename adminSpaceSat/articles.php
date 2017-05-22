@@ -101,8 +101,8 @@ else $tri = 'asc';
             <div class="inner">
               <h3>Liste des articles</h3>
 
-                      <div class="12u$ formChamp">
-                            <div class="select-wrapper ">
+                      <div class="12u$ formChamp select-cat">
+                            <div class="select-wrapper select-container">
                                 <select name="categorie" id="categorie" onchange="javascript:window.location='articles.php?selcat='+this.value;">
                                   
                                   <?php  //--- affichage liste catégories ---//
