@@ -10,7 +10,7 @@
     <nav id="nav">
       <a href="index.php" class="butperso alt fit">Accueil</a></li>
 			<a href="blog.php" class="butperso alt fit">Blog</a></li>
-			<a href="portofolio.php" class="butperso alt fit">Portofolio</a></li>
+			<a href="portfolio.php" class="butperso alt fit">Portfolio</a></li>
 			<a href="contact.php" class="butperso alt fit">Contact</a></li>
       <a href="../adminSpaceSat\" class="butperso alt fit">Backoffice</a></li>
     </nav>

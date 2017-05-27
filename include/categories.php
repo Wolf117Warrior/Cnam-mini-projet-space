@@ -14,12 +14,12 @@
                             if($result) { 
                               while($categorie=$result->fetch()) {  
                                   $catid = $categorie['ID_categorie'];
-                                  $cat = $categorie['LIBL_categorie'];
+                                  $cat = html_entity_decode($categorie['LIBL_categorie']);
                                   $total = $categorie['Nb_articles'];
                       ?>
                     
                     
-                      <li><a href="blog.php?id=<?= $catid; ?>" class="lien-cat"><?php echo '<b>'.$categorie['LIBL_categorie'].'</b>   - ('.$total.' articles)'; ?></a></li>
+                      <li><a href="blog.php?id=<?= $catid; ?>" class="lien-cat"><?php echo '<b>'.html_entity_decode($categorie['LIBL_categorie']).'</b>   - ('.$total.' articles)'; ?></a></li>
                     <?php     } 
                             }   
                           if($count==0)  echo "<li>pas de catégories</li>";

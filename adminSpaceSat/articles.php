@@ -78,23 +78,19 @@ else $tri = 'asc';
 <section id="articles" class="content-wrapper">
 <div class="inner">
             
+
+
+
+
             <section id="one" class="row">
-
-<!-- NAVBAR -->
-
-
-<?php include("./include/navbar.php"); ?>
-                
-              <section id="one" class="row">  
-              
-              
                  <!-- Connexion utilisateur : lien déconnexion -->
                 <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>
 
           </section>
 
 
-         
+                       <!-- navigation -->
+            <?php include("./include/navbar.php"); ?>
 
           <!-- messages -->
           <section id="one">
@@ -118,7 +114,7 @@ else $tri = 'asc';
                                         if($result) { 
                                           while($cat=$result->fetch()) {      ?>
                                   <option <?php echo (isset($selcat)&&$selcat==$cat['ID_categorie']?'selected':'');?> 
-                                    value="<?php echo $cat['ID_categorie']; ?>"><?php echo $cat['LIBL_categorie'].'   - ('.$cat['Nb_articles'].' articles)'; ?>
+                                    value="<?php echo $cat['ID_categorie']; ?>"><?php echo html_entity_decode($cat['LIBL_categorie']).'   - ('.html_entity_decode($cat['Nb_articles']).' articles)'; ?>
                                   </option>
                                   <?php   }   }    ?>
                                 </select>
@@ -162,7 +158,7 @@ else $tri = 'asc';
                          if($result) { 
                               while($article=$result->fetch()) {  
                                 $article_id = $article['ID_article'];
-                                $article_titre = $article['TITRE_article'];
+                                $article_titre = html_entity_decode($article['TITRE_article']);
             ?>
                       <tr>
                         <td>
@@ -176,11 +172,11 @@ else $tri = 'asc';
                           <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="width:80px;height:40px" alt="">
                         </td>
                         <td><?php echo $article_titre; ?> </td>
-                        <td><?php echo tronqueTexte($article['CONTENT_article'],140); ?></td>
+                        <td><?php echo tronqueTexte(html_entity_decode($article['CONTENT_article']),140); ?></td>
                         <td><?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?></td>
-                        <td><?php echo $article['LIBL_categorie']; ?></td>
+                        <td><?php echo html_entity_decode($article['LIBL_categorie']); ?></td>
                         <td><a href="article.php?action=modifier&id=<?php echo $article_id; ?>" class="button small">modifier</a></td>
-                        <td><a href=javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode($article_titre); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>'); class="button small">supprimer</a></td>
+                        <td><a href=javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode(html_entity_decode($article_titre)); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>'); class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
                       }   

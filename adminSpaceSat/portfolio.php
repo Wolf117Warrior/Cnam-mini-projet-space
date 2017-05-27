@@ -41,20 +41,7 @@ if(isset($_POST['Envoie'])){
 
 //=========================================================
 //===== Vérification Erreurs post formulaire ==========
-//=========================================================
-     
-     // Catégorie
-     //if(empty($categorie))   
-       //     $GLOBALS["erreurs"]['categorie']='<b>Catégorie</b> obligatoire';
-
-     // Titre
-     if(empty($titre))   
-            $GLOBALS["erreurs"]['titre']='<b>Titre</b> obligatoire';
-
-     // Contenu
-     if(empty($contenu))   
-            $GLOBALS["erreurs"]['contenu']='<b>Contenu</b> obligatoire';
-            
+//=========================================================      
      
 //=========================================================
 //===== enregistrement Bdd ==========
@@ -65,23 +52,14 @@ if(isset($_POST['Envoie'])){
         //===== NOUVEAU : insertion article Bdd ==========
         //=========================================================
       if($_POST['Envoie']=="nouveau"){  
-          $sauvegarde_article=$maBase->exec("INSERT INTO cnamcp09_articles (TITRE_article, CONTENT_article, DATE_article, ID_categorie) 
-                       VALUES ('{$titre}', '{$contenu}', NOW(), ".($categorie==null?null:$categorie).")");
-          $id = $maBase->lastInsertId();
-          $action = 'modifier';
-          // si succès
-          if($sauvegarde_article==1)
+          
             $retourEnvoiForm = '<div class="retourEnvoiFormok">L\'article a été ajoutée avec succès</div>';
         //=========================================================
         //===== MODIFIER : update article Bdd ==========
         //=========================================================
       }else if($_POST['Envoie']=="enregistrer"){    
           // insertion message Bdd
-          $sauvegarde_article=$maBase->exec("UPDATE cnamcp09_articles 
-            SET TITRE_article='{$titre}', CONTENT_article='{$contenu}', ID_categorie=".($categorie==null?null:$categorie)."
-              WHERE ID_article='{$id}'");
-          // si succès
-          if($sauvegarde_article==1){
+          
             $retourEnvoiForm = '<div class="retourEnvoiFormok">L\'article a été modifiée avec succès</div>';
             // renommage photo
             foreach (glob('../medias/'.$id."*.jpg") as $filename) {
@@ -89,7 +67,7 @@ if(isset($_POST['Envoie'])){
               if(!file_exists($nouveau_nom))
                 rename($filename , $nouveau_nom);
             }
-          }
+          
               
       }
 //=========================================================
@@ -164,19 +142,6 @@ if(isset($action)&&$action=='supprimer'&&isset($id)){
   }
   $action='modifier';           
 }
-//=========================================================
-//===== Bdd : article sélectionnée ==========
-//=========================================================
-if(isset($action)&&$action=='modifier'&&isset($id)){
-            $result_modif=$maBase->query('SELECT * FROM cnamcp09_articles WHERE ID_article='.$id); 
-            if($result_modif) {  
-              $art = $result_modif->fetch();
-              $titre = $art['TITRE_article'];
-              $contenu = $art['CONTENT_article'];
-              $date = $art['DATE_article'];
-              $categorie = $art['ID_categorie'];
-            }
-}
 
 ?>
 <!DOCTYPE HTML>
@@ -217,102 +182,134 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
 <section id="article" class="content-wrapper">
     <div class="inner">
 
-
-
             <section id="one" class="row">
-                
                  <!-- Connexion utilisateur : lien déconnexion -->
                 <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>
 
           </section>
 
-          <?php include("./include/navbar.php"); ?>
+          <!-- navigation -->
+            <?php include("./include/navbar.php"); ?>
+
+
 
           <!-- catégories -->
-          <section id="one">
-            <div class="inner">
-              <h3><?php echo (isset($action)&&$action=='nouveau'?'Nouveau':(isset($action)&&$action=='modifier'?'Modifer':'')); ?> Article</h3>
+          <section id="portfolio" class="content-wrapper">
 
+<div class="inner">
+
+  <h4 class="center">Portofolio articles</h4>
+  <div class="box alt">
+    <div class="row 50% uniform">
+        <?php //--------------------------------//
+        //--- affichage liste articles ---//
+        //--------------------------------// 
+        $result=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles WHERE ID_categorie IS NOT NULL ORDER BY DATE_article DESC"); 
+            $count=$result->rowCount() ;
+                         if($result) {  
+                              while($article=$result->fetch()) { 
+                                $article_id = $article['ID_article'];
+                                $article_titre = $article['TITRE_article'];
+            ?>
+          <?php 
+                  $nom_img = formateNomImage($article_titre);
+                  $img_o = '../medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('../medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
+                  $img_m = '../medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('../medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('../medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
+                  $img_p = '../medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('../medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('../medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
+                  $photo = (file_exists('../medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
+          ?>
+          <div class="4u">
+            <span class="image fit">
+              <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="" />
+            </span>
+            <div class="12u$(xsmall) formChamp formArticle supprimer">
+                <a href="javascript:confirm_supprimer('l\'image','article.php?action=supprimer&id=<?php echo $id; ?>');" class="button small">supprimer</a>
             </div>
+        </div>
 
-          </section>
 
+              <?php           } 
+                      }   
+                      if($count==0)  echo "<div class='row'>pas de photos</div>";
+              ?>
+    </div>
+  </div>
 
-          <section id="one">
-            <div class="inner">
+</div>
+
+<div class="inner">
+
+  <h4 class="center">Portofolio de satellite</h4>
+  <div class="inner modif-portfolio">
 
               <?php // message retour formulaire envoyé
                     echo isset($retourEnvoiForm)?$retourEnvoiForm:''; ?>
-                <form name="article" method="post" enctype="multipart/form-data" action="article.php<?php echo isset($action)?'?action='.$action:''; ?><?php echo isset($id)?'&id='.$id:''; ?>">
+                <form name="article" method="post" enctype="multipart/form-data" action="article.php<?php echo isset($action)?'?action='.$action:''; ?>
+                <?php echo isset($id)?'&id='.$id:''; ?>">
                     <div class="row uniform">
-                          <div class="12u$(xsmall) formChamp formArticle">
-                            <span class="image fit">
-                            <?php 
-                              $nom_img = formateNomImage($titre);
-                              $img_o = '../medias/'.$id.'-'.$nom_img.'-o.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-o.jpg'):'');
-                              $img_m = '../medias/'.$id.'-'.$nom_img.'-m.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-m.jpg'):'');
-                              $img_p = '../medias/'.$id.'-'.$nom_img.'-p.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-p.jpg'):'');
-                              $photo = (file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')); 
-                            ?>
-                              <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">
-                              <img src="<?php echo ($photo?$img_m:'../images/no_pic.jpg'); ?>" style="max-width:576px" alt="">
-                            </span>
-                          </div>
-                          <div class="12u$(xsmall) formChamp formArticle supprimer">
-                            <a href="javascript:confirm_supprimer('l\'image','article.php?action=supprimer&id=<?php echo $id; ?>');" class="button small">supprimer les images</a>                     
-                          </div>
                            <div class="12u$(xsmall) formChamp formArticle choix-photo">
                               <?php setBulleErreur('photo'); ?>
                               <input class="input-file" name="photo" type="file" <?php setClassErreur('photo'); ?>></li>
-                          </div>
-
-                          <div class="12u$ formChamp">
-                            <?php setBulleErreur('categorie'); ?>
-                            <div class="select-wrapper ">
-                                <select name="categorie" id="categorie" <?php setClassErreur('categorie'); ?>>
-                                  <option value='null'>Catégorie</option>
-                                  <?php //===================================// 
-                                        //=== affichage liste catégories ====//
-                                        //===================================// 
-                                        $result=$maBase->query('SELECT * FROM cnamcp09_categories ORDER BY LIBL_categorie DESC'); 
-                                        $count=$result->rowCount(); 
-                                        if($result) { 
-                                          while($cat=$result->fetch()) {      ?>
-                                  <option <?php echo (isset($categorie)&&$categorie==$cat['ID_categorie']?'selected':'');?> 
-                                    value="<?php echo $cat['ID_categorie']; ?>"><?php echo html_entity_decode($cat['LIBL_categorie']); ?>
-                                  </option>
-                                  <?php   }   }    ?>
-                                </select>
-                            </div>
-                          </div>
-
-                            <div class="12u$(xsmall) formChamp formArticle">
-                              <?php setBulleErreur('titre'); ?>
-                              <input type="text" name="titre" id="titre" value="<?php echo isset($titre)?html_entity_decode($titre):''; ?>" <?php setClassErreur('titre'); ?> placeholder="Titre" />
-                            </div>
-  
-                            <!-- Break -->
-                            <div class="12u$ formChamp">
-                              <?php setBulleErreur('contenu'); ?>
-                              <textarea name="contenu" id="contenu" placeholder="Entrer votre contenu" rows="6" <?php setClassErreur('contenu'); ?> ><?php echo isset($contenu)?html_entity_decode($contenu):''; ?></textarea>
-                            </div>
-
-                            <div class="12u$">
-                                <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?'enregistrer':'nouveau'; ?>" />
-                            </div>
-
-                            <span class="image fit">
-                              <img src="<?php echo ($photo?$img_o:'../images/no_pic.jpg'); ?>" style="max-width:800px" alt="">
-                            </span>
+                          </div>     
                   </div>
               </form>
 
             </div>
+  <div class="box alt">
+    <div class="row 50% uniform">
 
-          </section>
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/satellite/satellite-103.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/satellite/satellite-103418_1920.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="../images/portofolio/satellite/satellite-1030782_1920.jpg" alt="" /></span></div>
+      <!-- Break -->
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/satellite/telescope-63119_1280.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/satellite/8537258881_35bce8fa2e_o.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="../images/portofolio/satellite/Facebook-Satellite.jpg" alt="" /></span></div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="inner">
+
+  <h4 class="center">Portofolio de Agence</h4>
+  <div class="inner modif-portfolio">
+
+              <?php // message retour formulaire envoyé
+                    echo isset($retourEnvoiForm)?$retourEnvoiForm:''; ?>
+                <form name="article" method="post" enctype="multipart/form-data" action="article.php<?php echo isset($action)?'?action='.$action:''; ?>
+                <?php echo isset($id)?'&id='.$id:''; ?>">
+                    <div class="row uniform">
+                           <div class="12u$(xsmall) formChamp formArticle choix-photo">
+                              <?php setBulleErreur('photo'); ?>
+                              <input class="input-file" name="photo" type="file" <?php setClassErreur('photo'); ?>></li>
+                          </div>     
+                  </div>
+              </form>
+
+            </div>
+  <div class="box alt">
+    <div class="row 50% uniform">
+
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/agence/ESA_Space_Operations_Centre.jpg" alt="" /></span></div>
+      <div class="4u"><span class="image fit"><img src="../images/portofolio/agence/nasa-space-walk.jpg" alt="" /></span></div>
+      <div class="4u$"><span class="image fit"><img src="../images/portofolio/agence/spaceX.jpg" alt="" /></span></div>
+    </div>
+  </div>
+
+</div>
 
 
 </section>
+
+
+
+
+
+
+
+
 
     <!-- Footer -->
 
