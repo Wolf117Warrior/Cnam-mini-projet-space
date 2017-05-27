@@ -2593,6 +2593,7 @@
 		input[type="button"].fit,
 		button.fit,
 		.button.fit {
+			display: block;
 			margin: 0 0 1em 0;
 			width: 100%;
 		}
@@ -2619,6 +2620,7 @@
 		button.alt,
 		.button.alt {
 			background-color: transparent;
+			box-shadow: inset 0 0 0 2px #dbdbdb;
 			color: #555 !important;
 		}
 
@@ -2699,32 +2701,6 @@
 			}
 
 		}
-		.butperso {
-				-moz-appearance: none;
-				-webkit-appearance: none;
-				-ms-appearance: none;
-				appearance: none;
-				-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-				-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-				-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-				transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-				background-color: #fff;
-				border-radius: 0;
-				border: 0;
-				color: #ccccc !important;
-				cursor: pointer;
-				display: inline-block;
-				font-weight: 600;
-				height: 2.85em;
-				line-height: 2.95em;
-				padding: 0 1.5em;
-				text-align: center;
-				text-decoration: none;
-				white-space: nowrap;
-				width: 18%;
-		}
-
-
 
 /* Header */
 
@@ -3090,7 +3066,7 @@
 }
 /* encart article */
 #nav a {
-	margin: 0 0px;
+	margin: 0 20px;
 }
 /* label catégorie */
 h4.cat	{
@@ -3102,7 +3078,7 @@ h4.cat	{
 p.cat	{
 	display: inline;
 	margin:0;
-
+	
 }
 /* titre article */
 h3.titre	{
@@ -3129,7 +3105,7 @@ margin:0 auto;
 	width:70%;
 	border:0px solid red;
 
-}
+}	
 #main .taille1 {
 	width:80%;
 	border:0px solid red;
@@ -3163,7 +3139,7 @@ margin:0 auto;
 }
 
 #content .main-encart2 {
-	width: 90%;
+	width: 90%; 
 	float: left;
 }
 
@@ -3188,14 +3164,14 @@ margin:0 auto;
 		input[type="checkbox"].error,
 		select.error,
 		textarea.error {
-			background:#fbd6d6;
+			background:#fbd6d6; 
 		}
 
 	div.formChamp {
 		position:relative;
 	}
 
-	div.bulleErreur {
+	div.bulleErreur { 
 		position:absolute;
     	display: inline-block;
     	top:8px;left:22px;
@@ -3206,7 +3182,7 @@ margin:0 auto;
 	    border:1px red solid;
 	    background:#fbd6d6;
 	}
-	div.bulleErreur:after {
+	div.bulleErreur:after { 
      	content:'\25bc';
      	position:absolute;
      	left:20px; top:19px;
@@ -3215,7 +3191,7 @@ margin:0 auto;
 
 	div.bulleErreur span b {
 		color: red;
-     	width:auto;background:none;display:inline;
+     	width:auto;background:none;display:inline; 
 	}
 
 		input[type="text"]:focus,
@@ -3252,7 +3228,7 @@ width:80%;
 	display: block;
 	float:right;
 }
-.administration .newcat .formChamp,
+.administration .newcat .formChamp, 
 .administration .newcat .boutChamp    {
 		float:left;
 }
@@ -3268,7 +3244,7 @@ width:80%;
 	line-height: 2em;
 }
 
-.administration .newcat .formChamp	div.bulleErreur {
+.administration .newcat .formChamp	div.bulleErreur { 
 	top:-25px;
 }
 
@@ -3330,21 +3306,28 @@ float:left;
     white-space: nowrap;
 	}
 
+.administration #portfolio .supprimer{
+float:left;
+padding-top:5px;
+
+}
+
+
 
 /* messages */
-.administration #message_off, .administration #message_on {
+.administration #message_off, .administration #message_on { 
 	pointer-events: none;
 }
-.administration #message_off:before {
+.administration #message_off:before { 
 	pointer-events: all;
 	cursor: pointer;
-    content:'\25ba';
+    content:'\25ba';  
     color: green;
 }
-.administration #message_on:before {
+.administration #message_on:before { 
 	pointer-events: all;
 	cursor: pointer;
-    content:'\25bc';
+    content:'\25bc';  
      color: blue;
 }
 
@@ -3411,3 +3394,6 @@ color:#FD8E39;
 			}
 
 		}
+
+
+

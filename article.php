@@ -31,11 +31,27 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
       </section>
 
 
+
 <!-- NAVBAR -->
 
+<header id="header">
+    <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+  </div>
+</header>
 
 <?php include("./include/navbar.php"); ?>
 
+<!-- NAVBAR -->
+<section id="one" class="wrapper">
+  <!-- NAVBAR -->
+  <div id="navbar" class="inner">
+    <nav id="nav">
+      <a href="index.php">Accueil</a>
+      <a href="blog.php">Blog</a>
+      <a href="portfolio.php">Portfolio</a>
+      <a href="contact.php">Contact</a>
+    </nav>
+  </div>
 
 <!-- Formulaire de recherche -->
   <div id="recherche" class="inner">
@@ -69,10 +85,10 @@ if(isset($id)){
                 WHERE a.ID_article=".$id);
             if($result) {  
               $art = $result->fetch();
-              $titre = $art['TITRE_article'];
-              $contenu = $art['CONTENT_article'];
-              $date = $art['DATE_article'];
-              $categorie = $art['LIBL_categorie'];   
+              $titre = html_entity_decode($art['TITRE_article']);
+              $contenu = html_entity_decode($art['CONTENT_article']);
+              $date = html_entity_decode($art['DATE_article']);
+              $categorie = html_entity_decode($art['LIBL_categorie']);   
             }        
 }
     ?>

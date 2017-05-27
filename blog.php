@@ -34,8 +34,23 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 
 <!-- NAVBAR -->
 
-<?php include("./include/navbar.php"); ?>
+<header id="header">
+    <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+  </div>
+</header>
 
+
+<!-- NAVBAR -->
+<section id="one" class="wrapper">
+  <!-- NAVBAR -->
+  <div id="navbar" class="inner">
+    <nav id="nav">
+      <a href="index.php">Accueil</a>
+      <a href="blog.php">Blog</a>
+      <a href="portfolio.php">Portfolio</a>
+      <a href="contact.php">Contact</a>
+    </nav>
+  </div>
 
 <!-- Formulaire de recherche -->
   <div id="recherche" class="inner">
@@ -77,8 +92,8 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 
         <div class="4u<?php echo ($i%3==0?'$':''); ?> 12u$(medium)">
           <h4 class="cat">Catégorie : </h4>
-          <p class="cat"><?php echo $article['LIBL_categorie']; ?></p>
-          <h3 class="titre"><?php echo $article['TITRE_article']; ?></h3>
+          <p class="cat"><?php echo html_entity_decode($article['LIBL_categorie']); ?></p>
+          <h3 class="titre"><?php echo html_entity_decode($article['TITRE_article']); ?></h3>
 
           <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
 
@@ -95,7 +110,7 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 
 
           <p>
-            <?php echo tronqueTexte($article['CONTENT_article'],300); ?>
+            <?php echo tronqueTexte(html_entity_decode($article['CONTENT_article']),300); ?>
             <a href="article.php?id=<?php echo $article_id; ?>" class="button special small">Lire la suite</a>
           </p>
         </div>

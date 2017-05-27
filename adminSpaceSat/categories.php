@@ -132,13 +132,16 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
 <section id="contact" class="content-wrapper">
 <div class="inner">
 
-         
-<!-- NAVBAR -->
+            
+            <section id="one" class="row">
 
-
-<?php include("./include/navbar.php"); ?>
-                
-              <section id="one" class="row">  
+                <!-- navigation -->
+                  <nav id="nav" class="6u">
+                    <a href="categories.php">Catégories</a>
+                    <a href="articles.php">Articles</a>
+                    <a href="portfolio.php">Portfolio</a>
+                    <a href="messages.php">Messages</a>
+                  </nav>
                 
                  <!-- Connexion utilisateur : lien déconnexion -->
                 <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>

@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=========================================================
 // fonctions
 //=========================================================
@@ -15,36 +15,36 @@ if(isset($_POST['Envoie'])){
      $objet     =  htmlentities($_POST['objet'], ENT_QUOTES);
      $message   =  htmlentities($_POST['message'],   ENT_QUOTES);
      $human     =  htmlentities(isset($_POST['human'])?$_POST['human']:'',   ENT_QUOTES);
-
+     
      // Nom
-     if(empty($nom))
+     if(empty($nom))   
             $GLOBALS["erreurs"]['nom']='<b>Nom</b> obligatoire';
-
+     
      // Email
-     if(empty($email))
+     if(empty($email))   
             $GLOBALS["erreurs"]['email']='<b>Email</b> obligatoire';
      elseif(!preg_match('#^[\w.+-]{1,64}@[\w.-]{1,64}\.[\w.-]{2,6}$#i', $email) )
              $GLOBALS["erreurs"]['email']='<b>Email</b> non valide';
-
-
+    
+      
       // Objet
-     if(empty($objet))
-            $GLOBALS["erreurs"]['objet']='<b>Objet</b> obligatoire';
+     if(empty($objet))   
+            $GLOBALS["erreurs"]['objet']='<b>Objet</b> obligatoire';  
 
      // Message
-     if(empty($message))
-            $GLOBALS["erreurs"]['message']='<b>Message</b> obligatoire';
+     if(empty($message))   
+            $GLOBALS["erreurs"]['message']='<b>Message</b> obligatoire'; 
 
      // Human
-     if(empty($human))
-            $GLOBALS["erreurs"]['human']='<b>Click</b> obligatoire';
+     if(empty($human))   
+            $GLOBALS["erreurs"]['human']='<b>Click</b> obligatoire'; 
 
     //enregistrement Bdd
     if(!isset($GLOBALS["erreurs"])){
       //conexion Bdd
       include("./config/ConnexionBdd.php");
       // insertion message Bdd
-      $sauvegarde_message=$maBase->exec("INSERT INTO cnamcp09_messages (NOM_message, EMAIL_message, OBJET_message, TEXT_message, DATE_message)
+      $sauvegarde_message=$maBase->exec("INSERT INTO cnamcp09_messages (NOM_message, EMAIL_message, OBJET_message, TEXT_message, DATE_message) 
             VALUES ('{$nom}','{$email}','{$objet}','{$message}',NOW())") ;
       // si succès
       if($sauvegarde_message==1)
@@ -77,8 +77,24 @@ if(isset($_POST['Envoie'])){
 
 <!-- NAVBAR -->
 
+<header id="header">
+    <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+  </div>
+</header>
 
-<?php include("./include/navbar.php"); ?>
+
+<section id="one" class="wrapper">
+
+  <div class="inner">
+    <nav id="nav">
+      <a href="index.php">Accueil</a>
+      <a href="blog.php">Blog</a>
+      <a href="portfolio.php">Portfolio</a>
+      <a href="contact.php">Contact</a>
+    </nav>
+  </div>
+
+</section>
 
 <!-- Form -->
 
@@ -126,12 +142,8 @@ if(isset($_POST['Envoie'])){
       </div>
     </div>
   </form>
-</section>
 
-<section class="center">
-  <?php include("/include/carte.php"); ?>
 </section>
-
 
 		<!-- Footer -->
 

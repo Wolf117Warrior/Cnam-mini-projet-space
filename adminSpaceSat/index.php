@@ -133,10 +133,18 @@ if(isset($_POST['Envoie'])){
   else: ?>
             Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a>
 
-<!-- NAVBAR -->
+            <section id="one" class="wrapper">
 
+            <div class="inner">
+              <nav id="nav">
+                <a href="categories.php">Catégories</a>
+                <a href="articles.php">Articles</a>
+                <a href="portfolio.php">Portofolio</a>
+                <a href="messages.php">Messages</a>
+              </nav>
+            </div>
 
-<?php include("./include/navbar.php"); ?>
+          </section>
 
 <?php endif; ?>
 

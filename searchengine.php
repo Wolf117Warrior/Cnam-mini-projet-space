@@ -47,7 +47,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
     <nav id="nav">
       <a href="index.php">Accueil</a>
       <a href="blog.php">Blog</a>
-      <a href="portofolio.php">Portofolio</a>
+      <a href="portfolio.php">Portfolio</a>
       <a href="contact.php">Contact</a>
     </nav>
   </div>
@@ -88,7 +88,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
                               while($article=$result->fetch()) { 
                                 $i++; 
                                 $article_id = $article['ID_article'];
-                                $article_titre = $article['TITRE_article'];
+                                $article_titre = html_entity_decode($article['TITRE_article']);
             ?>
 <?php if($i==1) { ?>
     <h3>Résultat de recherche :  
@@ -118,7 +118,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
 
 
           <p>
-            <?php echo tronqueTexte($article['CONTENT_article'],200); ?>
+            <?php echo tronqueTexte(html_entity_decode($article['CONTENT_article']),200); ?>
             <a href="article.php?id=<?php echo $article_id; ?>" class="button special small">Lire la suite</a>
           </p>
         </div>
@@ -129,7 +129,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
                       }   
                       if($count==0) {  ?>
                         <h3>Résultat de recherche :  
-                        <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> articles trouvés
+                        <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> article trouvé
                         </h3>
                           </span><div class='row'>pas d'articles</div>
              <?php         }  

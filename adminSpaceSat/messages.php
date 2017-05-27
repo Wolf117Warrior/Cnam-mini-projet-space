@@ -64,12 +64,13 @@ include_once("../config/fonctions.php");
             
             <section id="one" class="row">
 
-<!-- NAVBAR -->
-
-
-<?php include("./include/navbar.php"); ?>
-                
-              <section id="one" class="row">  
+                <!-- navigation -->
+                  <nav id="nav" class="6u">
+                    <a href="categories.php">Catégories</a>
+                    <a href="articles.php">Articles</a>
+                    <a href="portfolio.php">Portfolio</a>
+                    <a href="messages.php">Messages</a>
+                  </nav>
                 
                  <!-- Connexion utilisateur : lien déconnexion -->
                 <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>
@@ -103,13 +104,13 @@ include_once("../config/fonctions.php");
                               while($message=$result->fetch()) {  ?>
 
                       <tr>
-                        <td><?php echo $message['NOM_message']; ?></td>
-                        <td><a href="mailto:<?php echo $message['EMAIL_message']; ?>"><?php echo $message['EMAIL_message']; ?></a></td>
-                        <td><?php echo $message['OBJET_message']; ?></td>
+                        <td><?php echo html_entity_decode($message['NOM_message']); ?></td>
+                        <td><a href="mailto:<?php echo html_entity_decode($message['EMAIL_message']); ?>"><?php echo html_entity_decode($message['EMAIL_message']); ?></a></td>
+                        <td><?php echo html_entity_decode($message['OBJET_message']); ?></td>
                         <td width="600">
                           <div>
-                          <div id="message_off" onclick="openMessage(this)"><?php echo tronqueTexte($message['TEXT_message'],200); ?></div>
-                          <div style="display:none" id="message_on" onclick="closeMessage(this)"><?php echo $message['TEXT_message']; ?></div>
+                          <div id="message_off" onclick="openMessage(this)"><?php echo tronqueTexte(html_entity_decode($message['TEXT_message']),200); ?></div>
+                          <div style="display:none" id="message_on" onclick="closeMessage(this)"><?php echo html_entity_decode($message['TEXT_message']); ?></div>
                         </div>
                         </td>
                         <td><?php echo date_format(new DateTime($message['DATE_message']), 'd/m/Y H:i:s'); ?></td>
