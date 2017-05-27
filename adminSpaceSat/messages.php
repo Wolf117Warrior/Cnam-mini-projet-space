@@ -64,13 +64,12 @@ include_once("../config/fonctions.php");
             
             <section id="one" class="row">
 
-                <!-- navigation -->
-                  <nav id="nav" class="6u">
-                    <a href="categories.php">Catégories</a>
-                    <a href="articles.php">Articles</a>
-                    <a href="index.php">Portofolio</a>
-                    <a href="messages.php">Messages</a>
-                  </nav>
+<!-- NAVBAR -->
+
+
+<?php include("./include/navbar.php"); ?>
+                
+              <section id="one" class="row">  
                 
                  <!-- Connexion utilisateur : lien déconnexion -->
                 <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>

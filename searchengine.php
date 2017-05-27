@@ -129,7 +129,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
                       }   
                       if($count==0) {  ?>
                         <h3>Résultat de recherche :  
-                        <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> article trouvé
+                        <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> articles trouvés
                         </h3>
                           </span><div class='row'>pas d'articles</div>
              <?php         }  

@@ -30,22 +30,8 @@ date_default_timezone_set('America/Martinique');
 
 <!-- NAVBAR -->
 
-<header id="header">
-    <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
-  </div>
-</header>
 
-<!-- NAVBAR -->
-<section id="one" class="wrapper">
-  <!-- NAVBAR -->
-  <div id="navbar" class="inner">
-    <nav id="nav">
-      <a href="index.php">Accueil</a>
-      <a href="blog.php">Blog</a>
-      <a href="portofolio.php">Portofolio</a>
-      <a href="contact.php">Contact</a>
-    </nav>
-  </div>
+<?php include("./include/navbar.php"); ?>
 
 <!-- Formulaire de recherche -->
   <div id="recherche" class="inner">

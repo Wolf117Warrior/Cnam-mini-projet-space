@@ -18,27 +18,10 @@
 			</section>
 
 
-
 <!-- NAVBAR -->
 
-<header id="header">
-    <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
-  </div>
-</header>
 
-
-<section id="one" class="wrapper">
-
-  <div class="inner">
-    <nav id="nav">
-      <a href="index.php">Accueil</a>
-      <a href="blog.php">Blog</a>
-      <a href="portofolio.php">Portofolio</a>
-      <a href="contact.php">Contact</a>
-    </nav>
-  </div>
-
-</section>
+<?php include("./include/navbar.php"); ?>
 
 <!-- Form -->
 
