@@ -39,7 +39,6 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
   </div>
 </header>
 
-<?php include("./include/navbar.php"); ?>
 
 <!-- NAVBAR -->
 <section id="one" class="wrapper">

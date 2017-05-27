@@ -3278,6 +3278,7 @@ float:left;
 .administration #article .choix-photo{
 float:left;
 }
+
 .administration #article .choix-photo input.input-file {
 	pointer-events: none;
 	position: relative;
