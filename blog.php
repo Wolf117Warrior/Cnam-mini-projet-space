@@ -73,47 +73,56 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
             $count=$result->rowCount() ;
                          if($result) {  
                               while($article=$result->fetch()) { 
+                                $article_id[$i] = $article['ID_article'];
+                                $article_categorie[$i] = $article['LIBL_categorie'];
+                                $article_titre[$i] = $article['TITRE_article'];
+                                $article_date[$i] = $article['DATE_article'];
+                                $article_content[$i] = $article['CONTENT_article'];
+                                $nom_img = formateNomImage($article_titre[$i]);
+                                $img_o[$i] = './medias/'.$article_id[$i].'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id[$i].'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id[$i].'-'.$nom_img.'-o.jpg'):'');
+                                $img_m[$i] = './medias/'.$article_id[$i].'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id[$i].'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id[$i].'-'.$nom_img.'-m.jpg'):'');
+                                $img_p[$i] = './medias/'.$article_id[$i].'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id[$i].'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id[$i].'-'.$nom_img.'-p.jpg'):'');
+                                $photo[$i] = (file_exists('./medias/'.$article_id[$i].'-'.$nom_img.'-o.jpg')); 
                                 $i++; 
-                                $article_id = $article['ID_article'];
-                                $article_titre = $article['TITRE_article'];
+                              }
+                            }
+                            $total = count($article_id);
             ?>
-<?php if($i==1||$i%4==0) { ?>
-      <div class="row article-spacer">
-<?php } ?>
-
-        <div class="4u<?php echo ($i%3==0?'$':''); ?> 12u$(medium)">
-          <h4 class="cat">Catégorie : </h4>
-          <p class="cat"><?php echo html_entity_decode($article['LIBL_categorie']); ?></p>
-          <h3 class="titre"><?php echo html_entity_decode($article['TITRE_article']); ?></h3>
-
-          <?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?>
-
-          <?php 
-                  $nom_img = formateNomImage($article_titre);
-                  $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
-                  $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
-                  $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
-                  $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
-          ?>
-          <span class="image fit">
-            <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="">
-          </span>
-
-
-          <p>
-            <?php echo tronqueTexte(html_entity_decode($article['CONTENT_article']),300); ?>
-            <a href="article.php?id=<?php echo $article_id; ?>" class="button special small">Lire la suite</a>
-          </p>
+<?php if($count==0) {  ?></span><div class='row'>pas d'articles</div><?php  }  ?>
+<?php    for($i=0; $i<$total; $i++) { ?>
+    <div class="table">
+        <div class="table-row">
+          <h4 class="cat table-cell"><?php $j=$i; if($j<$total) { ?>Catégorie : <p class="cat"><?php echo html_entity_decode($article_categorie[$j]); ?></p><?php } ?></h4>
+          <h4 class="cat table-cell"><?php $j++; if($j<$total) { ?>Catégorie : <p class="cat"><?php echo html_entity_decode($article_categorie[$j]); ?></p><?php } ?></h4>
+          <h4 class="cat table-cell"><?php $j++; if($j<$total) { ?>Catégorie : <p class="cat"><?php echo html_entity_decode($article_categorie[$j]); ?></p><?php } ?></h4>
         </div>
- <?php if($i%3==0) { ?>         
+        <div class="table-row">
+          <h3 class="titre table-cell"><?php $j=$i;  if($j<$total) { ?><?php echo html_entity_decode($article_titre[$j]); ?><?php } ?> </h3>
+          <h3 class="titre table-cell"><?php $j++; if($j<$total) { ?><?php echo html_entity_decode($article_titre[$j]); ?><?php } ?> </h3>
+          <h3 class="titre table-cell"><?php $j++; if($j<$total) { ?><?php echo html_entity_decode($article_titre[$j]); ?><?php } ?> </h3>
+        </div>
+        <div class="table-row">
+          <div class="titre table-cell"><?php $j=$i; if($j<$total) { ?><?php echo date_format(new DateTime($article_date[$j]), 'd/m/Y H:i:s'); ?><?php } ?> </div>
+          <div class="titre table-cell"><?php $j++; if($j<$total) { ?><?php echo date_format(new DateTime($article_date[$j]), 'd/m/Y H:i:s'); ?><?php } ?> </div>
+          <div class="titre table-cell"><?php $j++;  if($j<$total) { ?><?php echo date_format(new DateTime($article_date[$j]), 'd/m/Y H:i:s'); ?><?php } ?> </div>
+        </div>
+        <div class="table-row">
+          <span class="image fit table-cell"><?php $j=$i; if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt=""><?php } ?></span>
+          <span class="image fit table-cell"><?php $j++;  if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt=""><?php } ?></span>
+          <span class="image fit table-cell"><?php $j++;  if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt=""><?php } ?></span>
+        </div>
+        <div class="table-row">
+          <div class="table-cell"><?php $j=$i; if($j<$total) { ?><?php echo tronqueTexte(html_entity_decode($article_content[$j]),300); ?><?php } ?></div>
+          <div class="table-cell"><?php $j++;  if($j<$total) { ?><?php echo tronqueTexte(html_entity_decode($article_content[$j]),300); ?><?php } ?></div>
+          <div class="table-cell"><?php $j++;  if($j<$total) { ?><?php echo tronqueTexte(html_entity_decode($article_content[$j]),300); ?><?php } ?></div>
+        </div>
+        <div class="table-row">
+          <p class="more table-cell"><?php $j=$i; if($j<$total) { ?><a href="article.php?id=<?php echo $article_id[$j]; ?>" class="button special small">Lire la suite</a><?php } ?></p>
+          <p class="more table-cell"><?php $j++;  if($j<$total) { ?><a href="article.php?id=<?php echo $article_id[$j]; ?>" class="button special small">Lire la suite</a><?php } ?></p>
+          <p class="more table-cell"><?php $j++;  if($j<$total) { ?><a href="article.php?id=<?php echo $article_id[$j]; ?>" class="button special small">Lire la suite</a><?php } ?></p>
+        </div>
       </div>
-<?php } ?>
-              <?php           } 
-                      }   
-                      if($count==0)  echo "<div class='row'>pas d'articles</div>";
-              ?>
-
-
+<?php $i=$j; } ?>
 
 </div>
 </section>
@@ -154,3 +163,4 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 
   </body>
 </html>
+

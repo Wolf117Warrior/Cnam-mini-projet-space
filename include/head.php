@@ -1,5 +1,6 @@
 <head>
   <title>Space Sat Eridanus</title>
+  <html lang="fr">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <?php $link_css = (isset($access)&&$access=='admin'?'../':'').'assets/css/main.css';
@@ -14,7 +15,7 @@
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="theme-color" content="#ffffff">
     <!-- Js validation formulaire page contact -->
-  <?php 
+  <?php
   $url = explode('/',$_SERVER["SCRIPT_NAME"]); //ESSAYER basename
   if($url[count($url)-1]=="contact.php"||(isset($access)&&$access=='admin')) { ?>
     <script type="text/javascript" src="<?php echo (isset($access)&&$access=='admin'?'../':''); ?>assets/js/validationFormulaire.js"></script>

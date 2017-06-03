@@ -35,7 +35,12 @@ function formateNomImage($str){
 // fonction tronquer texte long
 //=========================================================
 function tronqueTexte($texte,$long){
-  return mb_strimwidth($texte, 0, $long, ' ...');
+  $texte = strip_tags($texte);
+  if(strlen($texte)<$long)
+    return $texte.' ...';
+  return (mb_strimwidth($texte, 0, $long, ' ...'));
 }
+
+
 
 ?>
