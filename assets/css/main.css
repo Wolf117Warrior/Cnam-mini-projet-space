@@ -3125,11 +3125,16 @@ h4.cat	{
 /* titre catégorie */
 p.cat	{
 	display: inline;
+<<<<<<< HEAD
 	color: #9a9a9a;
     font-family: "Raleway", Arial, Helvetica, sans-serif;
     font-size: 13pt;
     font-weight: 300;
     line-height: 1.65;
+=======
+	margin:0;
+
+>>>>>>> 04eeec82c4d40904197361892a5ecebc70e025a3
 }
 /* bouton lire la suite */
 div.table-row p	{
