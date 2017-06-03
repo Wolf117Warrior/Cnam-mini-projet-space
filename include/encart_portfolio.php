@@ -19,11 +19,12 @@
                               $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
                               $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
+                              if($photo){
                               ?>
                               <span class="image fit">
-                                <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="" />
+                                <img src="<?php echo $img_m; ?>" alt="" />
                               </span>
-                              <?php           } 
+                              <?php    }       } 
                       }   
                       if($count_art==0)  echo "<div class='row'>pas de photos</div>";
               ?>
