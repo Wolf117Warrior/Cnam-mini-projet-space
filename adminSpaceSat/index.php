@@ -67,7 +67,7 @@ if(isset($_POST['Envoie'])){
 
    <?php include("../include/head.php"); ?>
 
-	<body>
+	<body class="administration">
 
 		<!-- LOGO --> <!-- Bannière -->
 			<section id="titreAdmin">
@@ -131,9 +131,12 @@ if(isset($_POST['Envoie'])){
         //--- User authentifié  ---//
         //-------------------------//
   else: ?>
-            Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a>
-
-            <?php include("./include/navbar.php"); ?>
+          <section id="one" class="row">
+                 <!-- Connexion utilisateur : lien déconnexion -->
+                <div id="connexion" class="6u">Vous êtes connecté : <?php echo $_SESSION['authenticate']['user']; ?> - <a href='?deconnexion'>se déconnecter</a></div>
+          </section>
+          
+          <?php include("./include/navbar.php"); ?>
 
 <?php endif; ?>
 

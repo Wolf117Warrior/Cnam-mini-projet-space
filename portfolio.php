@@ -39,74 +39,59 @@ include("./config/fonctions.php");
 
 </section id="portfolio" class="content-wrapper">
 
-<div class="inner">
 
-  <h4 class="center">Portofolio articles</h4>
-  <div class="box alt">
-    <div class="row 50% uniform">
-        <?php //--------------------------------//
-        //--- affichage liste articles ---//
-        //--------------------------------// 
-        $result=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles WHERE ID_categorie IS NOT NULL ORDER BY DATE_article DESC"); 
+
+    <?php //--------------------------------//
+          //--- affichage liste catégories ---//
+          //--------------------------------//
+            $result=$maBase->query('SELECT  c.LIBL_categorie, c.ID_categorie, a.ID_article, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
+                                      FROM cnamcp09_categories c  LEFT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie
+                                        GROUP BY 1,2 HAVING Nb_articles!=0');
             $count=$result->rowCount() ;
-                         if($result) {  
-                              while($article=$result->fetch()) { 
-                                $article_id = $article['ID_article'];
-                                $article_titre = html_entity_decode($article['TITRE_article']);
+
+            if($result) { 
+              while($categorie=$result->fetch()) {  
+                $catid = $categorie['ID_categorie'];
+                $cat = html_entity_decode($categorie['LIBL_categorie']);
+                $total = $categorie['Nb_articles'];
             ?>
-          <?php 
-                  $nom_img = formateNomImage($article_titre);
-                  $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
-                  $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
-                  $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
-                  $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
-          ?>
-          <div class="4u"><span class="image fit">
-            <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="" />
-          </span></div>
-              <?php           } 
+                      
+                      <div class="inner">
+                        <h4 class="center">Portfolio de <?php echo html_entity_decode($categorie['LIBL_categorie']).'</b>   - ('.$total.' articles)'; ?></h4>
+                        <div class="box alt">
+                          <div class="row 50% uniform">
+                            <?php //--------------------------------//
+                              //--- affichage liste articles ---//
+                              //--------------------------------// 
+                              $result_art=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles 
+                                                                  WHERE ID_categorie ='{$catid}' ORDER BY DATE_article DESC"); 
+                                  $count_art=$result_art->rowCount() ;
+                                               if($result_art) {  
+                                                    while($article=$result_art->fetch()) { 
+                                                      $article_id = $article['ID_article'];
+                                                      $article_titre = html_entity_decode($article['TITRE_article']);
+                                  ?>
+                            <?php 
+                              $nom_img = formateNomImage($article_titre);
+                              $img_o = './medias/'.$article_id.'-'.$nom_img.'-o.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-o.jpg'):'');
+                              $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
+                              $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
+                              $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
+                              ?>
+                              <div class="4u"><span class="image fit">
+                                <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="" />
+                              </span></div>
+                              <?php           } 
                       }   
-                      if($count==0)  echo "<div class='row'>pas de photos</div>";
+                      if($count_art==0)  echo "<div class='row'>pas de photos</div>";
               ?>
-    </div>
-  </div>
-
-</div>
-
-<div class="inner">
-
-  <h4 class="center">Portofolio de satellite</h4>
-  <div class="box alt">
-    <div class="row 50% uniform">
-
-      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/satellite-103.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/satellite-103418_1920.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/portofolio/satellite/satellite-1030782_1920.jpg" alt="" /></span></div>
-      <!-- Break -->
-      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/telescope-63119_1280.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/portofolio/satellite/8537258881_35bce8fa2e_o.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/portofolio/satellite/Facebook-Satellite.jpg" alt="" /></span></div>
-
-    </div>
-  </div>
-
-</div>
-
-<div class="inner">
-
-  <h4 class="center">Portofolio de Agence</h4>
-  <div class="box alt">
-    <div class="row 50% uniform">
-
-      <div class="4u"><span class="image fit"><img src="images/portofolio/agence/ESA_Space_Operations_Centre.jpg" alt="" /></span></div>
-      <div class="4u"><span class="image fit"><img src="images/portofolio/agence/nasa-space-walk.jpg" alt="" /></span></div>
-      <div class="4u$"><span class="image fit"><img src="images/portofolio/agence/spaceX.jpg" alt="" /></span></div>
-    </div>
-  </div>
-
-</div>
-
-
+                          </div>
+                        </div>
+                      </div>
+            <?php   } 
+                  }   
+                if($count==0)  echo "pas de catégories";  ?>
+               
 </section>
 
 		<!-- Footer -->
