@@ -144,21 +144,12 @@ date_default_timezone_set('America/Martinique');
       //== Affichage encart liste des catégories ==
       //============================================
           include("./include/categories.php");
+               //============================================
+      //== Affichage encart portfolio ==
+      //============================================
+          include("./include/encart_portfolio.php");
       ?>
 
-        <div class="inner main-encart2 portfolio">
-              <div class="row">
-                <div class="12u$(small)">
-                  <h3>Portfolio</h3>
-                  <span class="image fit"><img src="images/pic01.jpg" alt=""></span>
-                  <span class="image fit"><img src="images/pic01.jpg" alt=""></span>
-                  <span class="image fit"><img src="images/pic01.jpg" alt=""></span>
-                  <span class="image fit"><img src="images/pic01.jpg" alt=""></span>
-                  <span class="image fit"><img src="images/pic01.jpg" alt=""></span>
-                  <a href="portfolio.php" class="button special small">Voire tout</a>
-                </div>
-              </div>
-        </div>
 </section>
 </section>
 
