@@ -119,11 +119,13 @@ window.onload=function(){
 			//== login ==
 			if(document.forms[0].login.value=="")
 				tab_erreur['login']="<b>Login</b> obligatoire";
-
 	
 			//== mot de passe ==
 			if(document.forms[0].mdp.value=="")
 				tab_erreur['mdp']="<b>Mot de passe</b> obligatoire";
+			else if( document.forms[0].mdp.value.length < 4)
+                tab_erreur['mdp']='<b>Mot de Passe</b> non valide (min 4 caractères)'; 
+
 		}
 
 

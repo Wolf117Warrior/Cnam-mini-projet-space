@@ -51,8 +51,8 @@ if(isset($_POST['Envoie'])){
            // Nom
      if(empty($mdp))   
             $GLOBALS["erreurs"]['mdp']='<b>Mot de passe</b> obligatoire';
-      elseif(strlen($mdp) < 4 || strlen($mdp) > 10)
-           $GLOBALS["erreurs"]['pwd']='<b>Mot de Passe</b> non valide (entre 4 et 10 caractères)';   
+      elseif(strlen($mdp) < 4)
+           $GLOBALS["erreurs"]['pwd']='<b>Mot de Passe</b> non valide (min 4 caractères)';   
 
      
 //=========================================================

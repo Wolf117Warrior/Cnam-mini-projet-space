@@ -3285,6 +3285,7 @@ margin:0 auto;
 
 .administration #utilisateurs .formChamp div.bulleErreur {
 	top:-25px;
+	left:0px;
 }
 
 .administration #utilisateurs .formChamp, .administration #utilisateurs .boutChamp {
