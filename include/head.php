@@ -17,7 +17,9 @@
     <!-- Js validation formulaire page contact -->
   <?php
   $url = explode('/',$_SERVER["SCRIPT_NAME"]); //ESSAYER basename
-  if($url[count($url)-1]=="contact.php"||(isset($access)&&$access=='admin')) { ?>
-    <script type="text/javascript" src="<?php echo (isset($access)&&$access=='admin'?'../':''); ?>assets/js/validationFormulaire.js"></script>
+  if($url[count($url)-1]=="contact.php"||(isset($access)&&$access=='admin')) { 
+      $link_js = (isset($access)&&$access=='admin'?'../':'').'assets/js/validationFormulaire.js';
+      $link_js .= '?v='.filemtime($link_js);  ?>
+      <script type="text/javascript" src="<?php echo $link_js; ?>"></script>
   <?php } ?>
 </head>
