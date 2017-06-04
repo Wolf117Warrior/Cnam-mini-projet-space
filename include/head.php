@@ -21,6 +21,7 @@
       $link_js = (isset($access)&&$access=='admin'?'../':'').'assets/js/validationFormulaire.js';
       $link_js .= '?v='.filemtime($link_js);  ?>
       <script type="text/javascript" src="<?php echo $link_js; ?>"></script>
+      
       <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=d9gev28oiz7icwy2ev18240rkedm4esg5rpdes2c25msxce5"></script>
       <script>tinymce.init({ selector:'textarea' <?php if((isset($access)&&$access=='admin')) { ?> ,
         height: 500,

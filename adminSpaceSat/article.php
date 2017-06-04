@@ -255,9 +255,11 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                               $photo = (file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')); 
                             ?>
                               <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">
-                              <img src="<?php echo ($photo?$img_m:'../images/no_pic.jpg'); ?>" style="max-width:576px" alt="">
+                              <img src="<?php echo ($photo?$img_m:'../images/no_pic.jpg'); ?>" style="float:left;max-width:570px;margin-right:10px" alt="">
+                              <img src="<?php echo ($photo?$img_o:'../images/no_pic.jpg'); ?>" style="max-width:343px;" alt="">
                             </span>
                           </div>
+                          <span style="clear:both"></span>
                           <div class="12u$(xsmall) formChamp formArticle supprimer">
                             <a href="javascript:confirm_supprimer('l\'image','article.php?action=supprimer&id=<?php echo $id; ?>');" class="button small">supprimer les images</a>                     
                           </div>
@@ -301,9 +303,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                                 <input type="submit" name="Envoie" value="<?php echo (isset($action)&&$action=='modifier')?'enregistrer':'nouveau'; ?>" />
                             </div>
 
-                            <span class="image fit">
-                              <img src="<?php echo ($photo?$img_o:'../images/no_pic.jpg'); ?>" style="max-width:800px" alt="">
-                            </span>
+                    
                   </div>
               </form>
 
