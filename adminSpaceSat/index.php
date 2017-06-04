@@ -42,7 +42,7 @@ if(isset($_POST['Envoie'])){
       // Vérification dans Bdd Login Mot de passe
       $result=$maBase->query("SELECT ID_utilisateur,NOM_utilisateur FROM cnamcp09_utilisateurs 
               WHERE LOGIN_utilisateur='{$login}' 
-                  AND MDP_utilisateur='{$pwd}'") ;
+                  AND MDP_utilisateur=md5('{$pwd}')") ;
       //--- Succès Authentification ---//
       if($result){
           if(!$user=$result->fetch()){ 
@@ -114,7 +114,7 @@ if(isset($_POST['Envoie'])){
             </div>
             <div class="6u 12u$(xsmall) formChamp">
               <?php setBulleErreur('pwd'); ?>
-              <input type="text" name="pwd" id="pwd" value="<?php echo isset($pwd)?html_entity_decode($pwd):''; ?>" <?php setClassErreur('pwd'); ?> placeholder="Password" />
+              <input type="password" name="pwd" id="pwd" value="<?php echo isset($pwd)?html_entity_decode($pwd):''; ?>" <?php setClassErreur('pwd'); ?> placeholder="Password" />
             </div>
 
 

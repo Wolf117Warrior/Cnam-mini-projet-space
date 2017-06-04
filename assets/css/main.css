@@ -3277,7 +3277,31 @@ margin:0 auto;
 .administration div h3  {
 	margin-top:60px;
 }
+/* users */
+.administration #utilisateurs .newuser   {
+	display: inline-block;
+	float: right;
+}
 
+.administration #utilisateurs .formChamp div.bulleErreur {
+	top:-25px;
+}
+
+.administration #utilisateurs .formChamp, .administration #utilisateurs .boutChamp {
+	display: inline-block;
+	position: relative;
+}
+.administration #utilisateurs .formChamp input   {
+	width: 250px;
+	height: 2em;
+	float:left;
+	margin-right:5px; 
+}
+.administration #utilisateurs .boutChamp input   {
+	float:left;
+	height: 2em; 
+   	line-height: 2em; 
+}
 /* nouvelle catégorie */
 
 .administration .table_row {
