@@ -22,7 +22,7 @@
       $link_js .= '?v='.filemtime($link_js);  ?>
       <script type="text/javascript" src="<?php echo $link_js; ?>"></script>
       <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=d9gev28oiz7icwy2ev18240rkedm4esg5rpdes2c25msxce5"></script>
-      <script>tinymce.init({ selector:'textarea' ,
+      <script>tinymce.init({ selector:'textarea' <?php if((isset($access)&&$access=='admin')) { ?> ,
         height: 500,
         theme: 'modern',
         plugins: [
@@ -41,7 +41,7 @@
         content_css: [
           '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
           '//www.tinymce.com/css/codepen.min.css'
-        ]
+        ] <?php } ?>
        });</script>
   <?php } ?>
 
