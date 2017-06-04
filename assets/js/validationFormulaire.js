@@ -6,7 +6,7 @@ window.onload=function(){
 	//=============================================
 	//====== FONCTION :Submit =====================
 	//=============================================
-	if(document.forms[1]!=null)
+	if(document.forms[0]!=null)
 	document.forms[0].onsubmit = function(form) {  console.log('submit');
 
 		//reset erreurs formulaire
@@ -105,11 +105,25 @@ window.onload=function(){
 				console.log(document.forms[0].photo.files[0]);
 				if(document.forms[0].photo.files[0].size>2000000)
 					tab_erreur['photo']="<b>Photo</b> max 2Mo";
-
-			}
-
-				
+			}	
 	
+		}
+
+		//====== Formulaire utilisateurs =====================
+		else if(document.forms['utilisateurs']!=null){ 
+		
+			//== nom ==
+			if(document.forms[0].nom.value=="")
+				tab_erreur['nom']="<b>Nom</b> obligatoire";
+
+			//== login ==
+			if(document.forms[0].login.value=="")
+				tab_erreur['login']="<b>Login</b> obligatoire";
+
+	
+			//== mot de passe ==
+			if(document.forms[0].mdp.value=="")
+				tab_erreur['mdp']="<b>Mot de passe</b> obligatoire";
 		}
 
 
