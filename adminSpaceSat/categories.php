@@ -29,6 +29,10 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
 if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
 else $tri = 'asc';
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
 //=========================================================
 //===== post formulaire ==========
 //=========================================================
@@ -174,11 +178,20 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
             <?php  //--------------------------------//
                    //--- affichage liste catégories ---//
                   //--------------------------------//
-            $result=$maBase->query('SELECT  c.LIBL_categorie, c.ID_categorie, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
+         /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_categories");
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
+            $result=$maBase->query("SELECT  c.LIBL_categorie, c.ID_categorie, COUNT(DISTINCT a.ID_article) AS 'Nb_articles'  
                                         FROM cnamcp09_categories c  LEFT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie GROUP BY 1,2
                                     UNION
-                                    SELECT  IFNULL(c.LIBL_categorie ,"sans catégorie"), a.ID_categorie, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
-                                        FROM cnamcp09_categories c  RIGHT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie GROUP BY 1,2');
+                                    SELECT  IFNULL(c.LIBL_categorie ,'sans catégorie'), a.ID_categorie, COUNT(DISTINCT a.ID_article) AS 'Nb_articles'  
+                                        FROM cnamcp09_categories c  RIGHT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie GROUP BY 1,2
+                                        LIMIT {$pagination['offset']},{$pagination['limit']}");
             $count=$result->rowCount() ;
                                 ?>
 
@@ -208,7 +221,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                       <tr>
                         <td class="table_row"><?php echo '<b>'.$cat.'</b>   - ('.$total.' articles)'; ?> </td>
                         <td><a href="?action=modifier&id=<?php echo $catid; ?>" class="button small">modifier</a></td>
-                        <td><a href=javascript:confirm_supprimer('la&nbsp;catégorie&nbsp;<?php echo rawurlencode($cat); ?>','categories.php?action=supprimer&id=<?php echo $catid; ?>'); class="button small">supprimer</a></td>
+                        <td><a href="javascript:confirm_supprimer('la&nbsp;catégorie&nbsp;<?php echo rawurlencode($cat); ?>','categories.php?action=supprimer&id=<?php echo $catid; ?>');" class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
                           }
@@ -222,7 +235,12 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
 
           </section>
 
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 </section>
 
     <!-- Footer -->

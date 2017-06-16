@@ -1,4 +1,5 @@
 <?php  
+session_start(); 
 // fuseau horaire 
 date_default_timezone_set('America/Martinique'); 
 //=========================================================
@@ -9,7 +10,12 @@ include("./config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTES); 
+// mot clé de recherche
+if(isset($_POST["query"]))   $_SESSION['query'] = htmlentities($_POST["query"], ENT_QUOTES); 
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES);  
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -48,7 +54,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
     <form method="post" action="searchengine.php">
       <div class="row uniform recherche-container">
         <div class="9u 12u$(small)  recherche-query">
-          <input type="text" name="query" id="query" value="<?php echo isset($query)?html_entity_decode($query):''; ?>" placeholder="Mots clés ...">
+          <input type="text" name="query" id="query" value="<?php echo isset($_SESSION['query'])?html_entity_decode($_SESSION['query']):''; ?>" placeholder="Mots clés ...">
         </div>
         <div class="3u$ 12u$(small) recherche-bouton">
           <input type="submit" value="Rechercher" class="fit">
@@ -65,13 +71,22 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
   <?php //--------------------------------//
         //--- affichage liste articles ---//
         //--------------------------------// 
+        $where_rech = "AND (lower(CONVERT(c.LIBL_categorie USING utf8)) LIKE lower(CONVERT('%{$_SESSION['query']}%' USING utf8))  
+                  OR lower(CONVERT(a.TITRE_article USING utf8)) LIKE lower(CONVERT('%{$_SESSION['query']}%' USING utf8)) 
+                  OR lower(CONVERT(a.CONTENT_article USING utf8)) LIKE lower(CONVERT('%{$_SESSION['query']}%' USING utf8)) )";
+        /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_articles a 
+                                              LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie WHERE c.ID_categorie IS NOT NULL {$where_rech}");
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
         $result=$maBase->query("SELECT a.*, c.LIBL_categorie  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 
-                WHERE c.LIBL_categorie IS NOT NULL 
-                AND (lower(CONVERT(c.LIBL_categorie USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8))  
-                  OR lower(CONVERT(a.TITRE_article USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8)) 
-                  OR lower(CONVERT(a.CONTENT_article USING utf8)) LIKE lower(CONVERT('%{$query}%' USING utf8)) )
-                ORDER BY DATE_article DESC"); 
+                WHERE c.ID_categorie IS NOT NULL {$where_rech} ORDER BY DATE_article DESC LIMIT {$pagination['offset']},{$pagination['limit']}"); 
             $i = 0;
             $count=$result->rowCount() ;
                          if($result) {  
@@ -92,7 +107,7 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
                             $total = count($article_id);
             ?>
      <h3>Résultat de recherche :  
-      <span class="motrech"><?php echo $query.'</span> - <span class="countrech">('.$count.')</span>'; ?> articles trouvés
+      <span class="motrech"><?php echo $_SESSION['query'].'</span> - <span class="countrech">('.$total_articles.')</span>'; ?> articles trouvés
     </h3>
 
        <?php if($count==0) {  ?></span><div class='row'>pas d'articles</div><?php  }  ?>
@@ -134,9 +149,12 @@ if(isset($_POST["query"]))      $query = htmlentities($_POST["query"], ENT_QUOTE
       </div>
 <?php $i=$j; } ?>  
 
-           
-
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 
 </div>
 </section>

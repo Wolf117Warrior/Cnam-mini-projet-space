@@ -24,6 +24,13 @@ include_once("../config/ConnexionBdd.php");
 // fonctions
 //=========================================================
 include_once("../config/fonctions.php");
+//=========================================================
+//===== init ==========
+//=========================================================
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
 ?><!DOCTYPE HTML>
 <!--
 	Theory by TEMPLATED
@@ -91,8 +98,16 @@ include_once("../config/fonctions.php");
                     <tbody>
             <?php  //--------------------------------//
                    //--- affichage liste messages ---//
-                  //--------------------------------//
-            $result=$maBase->query('SELECT * FROM cnamcp09_messages ORDER BY DATE_message DESC'); 
+                  //--------------------------------// 
+            /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_messages");
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
+            $result=$maBase->query("SELECT * FROM cnamcp09_messages ORDER BY DATE_message DESC LIMIT {$pagination['offset']},{$pagination['limit']}"); 
                          if($result) { 
                               while($message=$result->fetch()) {  ?>
 
@@ -115,7 +130,12 @@ include_once("../config/fonctions.php");
                 </div>
 
           </section>
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 </section>
 
 		<!-- Footer -->

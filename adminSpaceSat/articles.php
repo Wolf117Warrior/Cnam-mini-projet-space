@@ -30,7 +30,10 @@ if(isset($_GET["selcat"]))     $selcat = htmlentities($_GET["selcat"], ENT_QUOTE
 if(isset($_GET["col"]))     $col = htmlentities($_GET["col"], ENT_QUOTES);
 if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
 else $tri = 'asc';
-
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
 //=========================================================
 //===== SUPPRIMER : delete article Bdd ==========
 //=========================================================
@@ -109,7 +112,7 @@ else $tri = 'asc';
                                                               SELECT  IFNULL(c.LIBL_categorie ,"Sans catégorie"), IFNULL(a.ID_categorie ,"sans"), COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
                                                                   FROM cnamcp09_categories c  RIGHT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie GROUP BY 1,2 ');
                                         $count=$result->rowCount(); ?>
-                                        <option value='toutes'>Toutes les Catégories - (<?php echo $count; ?> articles)</option>
+                                        <option value='toutes'>Toutes les Catégories - (<?php echo $count; ?> catégories)</option>
                                   <?php
                                         if($result) { 
                                           while($cat=$result->fetch()) {      ?>
@@ -147,11 +150,20 @@ else $tri = 'asc';
             <?php  //--------------------------------//
                    //--- affichage liste articles ---//
                   //--------------------------------// 
+            /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_articles"
+              .(isset($selcat)&&$selcat=='toutes'||!isset($selcat)?'':(isset($selcat)&&$selcat=='sans'?' WHERE ID_categorie IS NULL':' WHERE ID_categorie='.$selcat)));
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
                $result=$maBase->query("SELECT a.*, IFNULL(c.LIBL_categorie ,'sans catégorie')  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie "
               .(isset($selcat)&&$selcat=='toutes'||!isset($selcat)?'':(isset($selcat)&&$selcat=='sans'?'WHERE a.ID_categorie IS NULL':'WHERE a.ID_categorie='.$selcat))
-              ." ORDER BY ".(isset($col)&&$col=='titre'?'TITRE_article':(isset($col)&&$col=='cat'?'LIBL_categorie':'DATE_article'))." ".(isset($tri)&&$tri=='asc'?'ASC':'DESC')); 
-
+              ." ORDER BY ".(isset($col)&&$col=='titre'?'TITRE_article':(isset($col)&&$col=='cat'?'LIBL_categorie':'DATE_article'))." ".(isset($tri)&&$tri=='asc'?'ASC':'DESC')
+              ." LIMIT {$pagination['offset']},{$pagination['limit']}"); 
 
 
             $count=$result->rowCount() ;
@@ -176,7 +188,7 @@ else $tri = 'asc';
                         <td><?php echo date_format(new DateTime($article['DATE_article']), 'd/m/Y H:i:s'); ?></td>
                         <td><?php echo html_entity_decode($article['LIBL_categorie']); ?></td>
                         <td><a href="article.php?action=modifier&id=<?php echo $article_id; ?>" class="button small">modifier</a></td>
-                        <td><a href=javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode(html_entity_decode($article_titre)); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>'); class="button small">supprimer</a></td>
+                        <td><a href="javascript:confirm_supprimer('l\'article&nbsp;<?php echo rawurlencode(html_entity_decode($article_titre)); ?>','articles.php?action=supprimer&id=<?php echo $article_id.(isset($tri)?'&tri='.$tri:''); ?>');" class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
                       }   
@@ -188,7 +200,12 @@ else $tri = 'asc';
                 </div>
 
           </section>
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 </section>
 
     <!-- Footer -->

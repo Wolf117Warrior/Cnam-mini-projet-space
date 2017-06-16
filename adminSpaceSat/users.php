@@ -26,7 +26,10 @@ include_once("../config/fonctions.php");
 //=========================================================
 if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
 if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
-
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
 //=========================================================
 //===== post formulaire ==========
 //=========================================================
@@ -202,7 +205,16 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
             <?php  //--------------------------------//
                    //--- affichage liste articles ---//
                   //--------------------------------// 
-                $result=$maBase->query("SELECT * FROM cnamcp09_utilisateurs ORDER BY ID_utilisateur ASC"); 
+                        /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_utilisateurs");
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
+                $result=$maBase->query("SELECT * FROM cnamcp09_utilisateurs ORDER BY ID_utilisateur ASC LIMIT {$pagination['offset']},{$pagination['limit']}"); 
                 $count=$result->rowCount() ;
                          if($result) { 
                               while($user=$result->fetch()) {  
@@ -214,7 +226,7 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                         <td width="350"><?php echo html_entity_decode($user['LOGIN_utilisateur']); ?></td>
                         <td width="350"><?php echo html_entity_decode($user['MDP_utilisateur']); ?></td>
                         <td><a href="users.php?action=modifier&id=<?php echo $user_id; ?>" class="button small">modifier</a></td>
-                        <td><a href=javascript:confirm_supprimer('l\'utilisateur&nbsp;<?php echo rawurlencode(html_entity_decode($user_nom)); ?>','users.php?action=supprimer&id=<?php echo $user_id; ?>'); class="button small">supprimer</a></td>
+                        <td><a href="javascript:confirm_supprimer('l\'utilisateur&nbsp;<?php echo rawurlencode(html_entity_decode($user_nom)); ?>','users.php?action=supprimer&id=<?php echo $user_id; ?>');" class="button small">supprimer</a></td>
                       </tr>
             <?php           } 
                       }   
@@ -226,7 +238,12 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                 </div>
 
           </section>
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 </section>
 
     <!-- Footer -->

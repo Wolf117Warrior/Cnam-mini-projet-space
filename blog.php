@@ -1,4 +1,5 @@
-<?php  
+<?php 
+session_start(); 
 // fuseau horaire 
 date_default_timezone_set('America/Martinique'); 
 //=========================================================
@@ -9,7 +10,12 @@ include("./config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES); 
+// id catégorie articles
+if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
+// pagination 
+$page = '';
+if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES);     
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -57,18 +63,26 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
     </form>
   </div>
 </section>
-
+<a name="a"></a>
 <section id="content">
 <h3>Blog</h3>
 <section id="main" class="article-wrapper">
 
   <div class="inner taille1">
- <?php //--------------------------------//
+ <?php  //--------------------------------//
         //--- affichage liste articles ---//
-        //--------------------------------// 
+        //--------------------------------//
+        /** Initialisation pagination **/
+        // total des articles
+        $result_total_articles = $maBase->query("SELECT COUNT(*) AS total FROM cnamcp09_articles".(isset($id)?" WHERE ID_categorie='{$id}'":" WHERE ID_categorie IS NOT NULL"));
+        $tab_total_articles=$result_total_articles->fetch();
+        $total_articles=$tab_total_articles[0];
+        // pagination
+        $pagination = paginationBdd($total_articles,$page);
+
         $result=$maBase->query("SELECT a.*, c.LIBL_categorie  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 
-                WHERE c.LIBL_categorie IS NOT NULL ".(isset($id)?"AND a.ID_categorie='{$id}'":'')."  ORDER BY DATE_article DESC"); 
+                WHERE c.LIBL_categorie IS NOT NULL ".(isset($id)?"AND a.ID_categorie='{$id}'":'')."  ORDER BY DATE_article DESC LIMIT {$pagination['offset']},{$pagination['limit']}"); 
             $i = 0;
             $count=$result->rowCount() ;
                          if($result) {  
@@ -89,6 +103,7 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
                             $total = count($article_id);
             ?>
 <?php if($count==0) {  ?></span><div class='row'>pas d'articles</div><?php  }  ?>
+
 <?php    for($i=0; $i<$total; $i++) { ?>
     <div class="table">
         <div class="table-row">
@@ -123,7 +138,12 @@ if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);
         </div>
       </div>
 <?php $i=$j; } ?>
-
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<p class="pagination">'.$pagination['pagination'].'</p>';
+?>
 </div>
 </section>
 

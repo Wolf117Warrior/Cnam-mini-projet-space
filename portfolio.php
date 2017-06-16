@@ -40,15 +40,18 @@ include("./config/fonctions.php");
 </section id="portfolio" class="content-wrapper">
 
 
-
-    <?php //--------------------------------//
+    <?php //----------------------------------//
           //--- affichage liste catégories ---//
-          //--------------------------------//
-            $result=$maBase->query('SELECT  c.LIBL_categorie, c.ID_categorie, a.ID_article, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
+          //----------------------------------//
+           /* $result=$maBase->query('SELECT c.LIBL_categorie, c.ID_categorie, a.ID_article, COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
                                       FROM cnamcp09_categories c  LEFT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie
-                                        GROUP BY 1,2 HAVING Nb_articles!=0');
-            $count=$result->rowCount() ;
+                                        GROUP BY 1,2,3 HAVING Nb_articles!=0');*/
 
+            $result=$maBase->query('SELECT DISTINCT a.ID_categorie , c.LIBL_categorie , COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
+                                  FROM cnamcp09_categories c LEFT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie
+                                  WHERE a.ID_categorie IS NOT NULL GROUP BY 1,2');
+            $count=$result->rowCount() ;
+    
             if($result) { 
               while($categorie=$result->fetch()) {  
                 $catid = $categorie['ID_categorie'];
@@ -67,6 +70,7 @@ include("./config/fonctions.php");
                                                                   WHERE ID_categorie ='{$catid}' ORDER BY DATE_article DESC"); 
                                   $count_art=$result_art->rowCount() ;
                                                if($result_art) {  
+                                                    $exist = false;
                                                     while($article=$result_art->fetch()) { 
                                                       $article_id = $article['ID_article'];
                                                       $article_titre = html_entity_decode($article['TITRE_article']);
@@ -77,14 +81,14 @@ include("./config/fonctions.php");
                               $img_m = './medias/'.$article_id.'-'.$nom_img.'-m.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-m.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-m.jpg'):'');
                               $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
-                              if($photo){
+                              if($photo){ $exist = true;
                               ?>
                               <div class="4u"><span class="image fit">
                                 <img src="<?php echo $img_m; ?>" alt="" />
                               </span></div>
                               <?php      }     } 
                       }   
-                      if($count_art==0)  echo "<div class='row'>pas de photos</div>";
+                      if(!$exist)  echo "<div class='row'>pas de photos</div>";
               ?>
                           </div>
                         </div>
