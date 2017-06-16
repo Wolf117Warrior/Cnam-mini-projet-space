@@ -11,7 +11,7 @@ include("./config/fonctions.php");
 //===== init ==========
 //=========================================================
 // mot clé de recherche
-if(isset($_POST["query"]))   $_SESSION['query'] = htmlentities($_POST["query"], ENT_QUOTES); 
+if(isset($_POST["query"]))   $_SESSION['query'] = htmlentities(trim($_POST["query"]), ENT_QUOTES); 
 // pagination 
 $page = '';
 if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
@@ -88,6 +88,7 @@ if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QU
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 
                 WHERE c.ID_categorie IS NOT NULL {$where_rech} ORDER BY DATE_article DESC LIMIT {$pagination['offset']},{$pagination['limit']}"); 
             $i = 0;
+            $article_id = [];
             $count=$result->rowCount() ;
                          if($result) {  
                               while($article=$result->fetch()) { 
