@@ -33,12 +33,15 @@ else $tri = 'asc';
 // pagination 
 $page = '';
 if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
-if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES); 
 //=========================================================
 //===== SUPPRIMER : delete article Bdd ==========
 //=========================================================
       if(isset($action)&&$action=='supprimer'&&isset($id)){  
-          $suppprimer_article= $maBase->exec("DELETE FROM cnamcp09_articles WHERE ID_article='{$id}'");  
+          $suppprimer_article= $maBase->exec("DELETE FROM cnamcp09_articles WHERE ID_article='{$id}'");
+          // suppression photos  
+          foreach (glob('../medias/'.$id."*.jpg") as $filename) 
+            unlink($filename);
           // si succès
           if($suppprimer_article==1)
             $retourEnvoiForm = '<div class="retourEnvoiFormok">L\'article a été supprimée avec succès</div>';
@@ -192,7 +195,7 @@ if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QU
                       </tr>
             <?php           } 
                       }   
-                      if($count==0)  echo "<tr><td colspan='6'>pas d'articles</td></tr>";
+                      if($count==0)  echo "<tr><td colspan='7'>pas d'articles</td></tr>";
               ?>
                       
                     </tbody>

@@ -151,6 +151,9 @@ if(isset($_POST['Envoie'])){
             imagedestroy($nouvelle_image);
             unlink('../medias/'.$nom.$extension);
 
+            // insertion photo Bdd
+            $sauvegarde_article=$maBase->exec("UPDATE cnamcp09_articles SET PHOTO_article='1' WHERE ID_article='{$id}'");
+
         }
      }
   }
@@ -161,6 +164,8 @@ if(isset($_POST['Envoie'])){
 if(isset($action)&&$action=='supprimer'&&isset($id)){
   foreach (glob('../medias/'.$id."*.jpg") as $filename) {
       unlink($filename);
+      // supression photo Bdd
+      $sauvegarde_article=$maBase->exec("UPDATE cnamcp09_articles SET PHOTO_article='0' WHERE ID_article='{$id}'");
   }
   $action='modifier';           
 }

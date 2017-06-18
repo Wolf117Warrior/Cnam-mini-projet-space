@@ -6,7 +6,7 @@
                               //--- affichage liste articles ---//
                               //--------------------------------// 
                               $result_art=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles 
-                                                                  WHERE ID_categorie IS NOT NULL ORDER BY RAND() LIMIT 0,8"); 
+                                                                  WHERE ID_categorie IS NOT NULL AND PHOTO_article='1' ORDER BY RAND() LIMIT 0,8"); 
                                   $count_art=$result_art->rowCount() ;
                                                if($result_art) {  
                                                     while($article=$result_art->fetch()) { 

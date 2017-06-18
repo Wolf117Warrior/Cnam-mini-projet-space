@@ -32,7 +32,7 @@ else $tri = 'asc';
 // pagination 
 $page = '';
 if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
-if(isset($_GET["aff"]))     $_SESSION['aff'] = htmlentities($_GET["aff"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES); 
 //=========================================================
 //===== post formulaire ==========
 //=========================================================

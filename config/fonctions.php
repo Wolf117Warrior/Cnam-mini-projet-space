@@ -41,19 +41,30 @@ function tronqueTexte($texte,$long){
   return (mb_strimwidth($texte, 0, $long, ' ...'));
 }
 
-function paginationBdd($total_articles,$page){
+//=========================================================
+// fonction pagination enregistrements Bdd
+//=========================================================
+function paginationBdd($total_articles, $page, $params=null){
       if($total_articles==0) return ['offset'=>0,'limit'=>0,'pagination'=>''];
       // paramètres $_GET de l'url
       $param_url='';
       foreach ($_GET as $key => $value) {
-        if($key!='page'&&$key!='aff')    $param_url .= '&'.$key.'='.$value;
+        if($key!='page'&&$key!='aff'&&!array_key_exists($key,$params))    $param_url .= '&'.$key.'='.$value;
+      }
+      // paramètres optionnels l'url
+      foreach ($params as $key => $value) {
+        $param_url .= '&'.$key.'='.$value;
       }
 
       // tableau select affichage par page
-        $tab_aff = [1,3,6,9,12,15,18,21,24,48];
+        $tab_aff = [3,6,9,12,15,18,21,24,48];
+        
         // nombre articles par page
-        if(isset($_SESSION['aff'])) $nb_par_page = $_SESSION['aff'];
+        $nom_page = preg_replace('/.php/','',basename($_SERVER['PHP_SELF']));
+        if(isset($_SESSION['aff'][$nom_page][$params['cat_id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['cat_id']];
+        else if(isset($_SESSION['aff'][$nom_page])&&!is_array($_SESSION['aff'][$nom_page])) $nb_par_page = $_SESSION['aff'][$nom_page];
         else            $nb_par_page = $tab_aff[0];
+
         // nombre de liens de numéros de page à afficher
         $nb_liens = 7;
         // nombre de pages 
@@ -78,7 +89,7 @@ function paginationBdd($total_articles,$page){
         $pagination .= '<span class="select-wrapper select-container">';
         $pagination .= '<select id="aff" onchange="javascript:window.location=\'?'.(isset($page)?'page='.$page:'').$param_url.'&aff=\'+this.value">';
         for($i=0;$i<count($tab_aff);$i++)
-          $pagination .= '<option value="'.$tab_aff[$i].'" '.(isset($_SESSION['aff'])&&$_SESSION['aff']==$tab_aff[$i]?'selected':'').'>'.$tab_aff[$i].'</option>';
+          $pagination .= '<option value="'.$tab_aff[$i].'" '.($nb_par_page==$tab_aff[$i]?'selected':'').'>'.$tab_aff[$i].'</option>';
         $pagination .= '</select>';
         $pagination .= '</span>';
         /*********************************************************/

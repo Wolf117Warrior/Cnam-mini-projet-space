@@ -1,9 +1,18 @@
 <?php
+session_start(); 
 //=========================================================
 // conexion Bdd
 //=========================================================
 include("./config/ConnexionBdd.php"); 
 include("./config/fonctions.php"); 
+//=========================================================
+//===== init ==========
+//=========================================================
+// id catégorie articles
+if(isset($_GET["cat_id"]))      $cat_id = htmlentities($_GET["cat_id"], ENT_QUOTES);
+// pagination 
+if(isset($_GET["page"]))    $_SESSION['page'][$cat_id] = htmlentities($_GET["page"], ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))][$cat_id] = htmlentities($_GET["aff"], ENT_QUOTES); 
 ?><!DOCTYPE HTML>
 <!--
 	Theory by TEMPLATED
@@ -50,7 +59,7 @@ include("./config/fonctions.php");
             $result=$maBase->query('SELECT DISTINCT a.ID_categorie , c.LIBL_categorie , COUNT(DISTINCT a.ID_article) AS "Nb_articles"  
                                   FROM cnamcp09_categories c LEFT JOIN cnamcp09_articles a ON c.ID_categorie = a.ID_categorie
                                   WHERE a.ID_categorie IS NOT NULL GROUP BY 1,2');
-            $count=$result->rowCount() ;
+            $count=$result->rowCount();
     
             if($result) { 
               while($categorie=$result->fetch()) {  
@@ -66,8 +75,11 @@ include("./config/fonctions.php");
                             <?php //--------------------------------//
                               //--- affichage liste articles ---//
                               //--------------------------------// 
+                            // pagination
+                              $pagination = paginationBdd($total, $_SESSION['page'][$catid],['cat_id'=>$catid] );
                               $result_art=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles 
-                                                                  WHERE ID_categorie ='{$catid}' ORDER BY DATE_article DESC"); 
+                                                                  WHERE ID_categorie ='{$catid}' AND PHOTO_article='1' ORDER BY DATE_article DESC
+                                                                  LIMIT {$pagination['offset']},{$pagination['limit']}"); 
                                   $count_art=$result_art->rowCount() ;
                                                if($result_art) {  
                                                     $exist = false;
@@ -82,20 +94,28 @@ include("./config/fonctions.php");
                               $img_p = './medias/'.$article_id.'-'.$nom_img.'-p.jpg?v='.(file_exists('./medias/'.$article_id.'-'.$nom_img.'-p.jpg')?filemtime('./medias/'.$article_id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('./medias/'.$article_id.'-'.$nom_img.'-o.jpg')); 
                               if($photo){ $exist = true;
-                              ?>
+                            ?>
                               <div class="4u"><span class="image fit">
                                 <img src="<?php echo $img_m; ?>" alt="" />
                               </span></div>
-                              <?php      }     } 
-                      }   
+
+                              <?php      }     } ?>
+<?php 
+//---------------------//
+//----  Pagination ----//
+//---------------------//
+echo '<div style="width: 100%;"><p class="pagination">'.$pagination['pagination'].'</p></div>';
+?>
+               <?php       }   
                       if(!$exist)  echo "<div class='row'>pas de photos</div>";
               ?>
                           </div>
                         </div>
                       </div>
+
             <?php   } 
                   }   
-                if($count==0)  echo "pas de catégories";  ?>
+                if($count==0)  echo '<div class="inner"><div class="box">pas de catégories</div></div>';  ?>
                
 </section>
 
