@@ -9,7 +9,9 @@
         $link_css .= '?v='.filemtime($link_css);
   ?>
   <link rel="stylesheet" href="<?php echo $link_css; ?>" />
-  
+    <!-- thickbox -->
+  <link rel="stylesheet" href="<?php echo (isset($access)&&$access=='admin'?'../':''); ?>assets/css/thickbox.css" type="text/css" media="screen" />
+
   <!-- icones -->
   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons/android-chrome-192x192.png">
   <link rel="icon" type=".image/png" sizes="32x32" href="./images/favicons/favicon-32x32.png">
@@ -49,5 +51,7 @@
         ] <?php } ?>
        });</script>
   <?php } ?>
+
+
 
 </head>

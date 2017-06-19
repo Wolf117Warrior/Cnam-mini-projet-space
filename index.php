@@ -96,7 +96,9 @@ date_default_timezone_set('America/Martinique');
           <div class="titre table-cell"><?php echo date_format(new DateTime($article_date[0]), 'd/m/Y H:i:s'); ?></div>
         </div>
         <div class="table-row">
-          <span class="image fit table-cell"><img src="<?php echo ($photo[0]?$img_m[0]:'./images/no_pic.jpg'); ?>" width="200" alt=""></span>
+          <span class="image fit table-cell">
+            <img src="<?php echo ($photo[0]?$img_m[0]:'./images/no_pic.jpg'); ?>" width="200" alt="<?php echo html_entity_decode($article_categorie[0].' - '.$article_titre[0]); ?>">
+          </span>
         </div>
         <div class="table-row">
           <div class="table-cell"><?php echo tronqueTexte(html_entity_decode($article_content[0]),800); ?></div>
@@ -121,8 +123,8 @@ date_default_timezone_set('America/Martinique');
           <div class="titre table-cell"><?php $j++; if($j<$total) { ?><?php echo date_format(new DateTime($article_date[$j]), 'd/m/Y H:i:s'); ?><?php } ?> </div>
         </div>
         <div class="table-row">
-          <span class="image fit table-cell"><?php $j=$i; if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt=""><?php } ?></span>
-          <span class="image fit table-cell"><?php $j++;  if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt=""><?php } ?></span>
+          <span class="image fit table-cell"><?php $j=$i; if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt="<?php echo html_entity_decode($article_categorie[$j].' - '.$article_titre[$j]); ?>"><?php } ?></span>
+          <span class="image fit table-cell"><?php $j++;  if($j<$total) { ?><img src="<?php echo ($photo[$j]?$img_m[$j]:'./images/no_pic.jpg'); ?>" width="200" alt="<?php echo html_entity_decode($article_categorie[$j].' - '.$article_titre[$j]); ?>"><?php } ?></span>
         </div>
         <div class="table-row">
           <div class="table-cell"><?php $j=$i; if($j<$total) { ?><?php echo tronqueTexte(html_entity_decode($article_content[$j]),300); ?><?php } ?></div>

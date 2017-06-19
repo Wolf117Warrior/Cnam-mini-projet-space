@@ -97,7 +97,9 @@ if(isset($id)){
                   $photo = (file_exists('./medias/'.$id.'-'.$nom_img.'-o.jpg')); 
           ?>
           <span class="image fit">
-            <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="">
+            <a href="<?php echo $img_o; ?>" title="<?php echo $categorie.' - '.$titre; ?>" class="thickbox" rel="diaporama">
+              <img src="<?php echo ($photo?$img_m:'./images/no_pic.jpg'); ?>" alt="<?php echo html_entity_decode($categorie.' - '.$titre); ?>">
+            </a>
           </span>
 
           <p><?php echo isset($contenu)?html_entity_decode($contenu):''; ?></p>

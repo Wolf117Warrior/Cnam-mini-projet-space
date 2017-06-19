@@ -97,7 +97,9 @@ if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($
                               if($photo){ $exist = true;
                             ?>
                               <div class="4u"><span class="image fit">
-                                <img src="<?php echo $img_m; ?>" alt="" />
+                                <a href="<?php echo $img_o; ?>" title="<?php echo $cat.' - '.$article_titre; ?>" class="thickbox" rel="diaporama">
+                                  <img src="<?php echo $img_m; ?>" alt="<?php echo $cat.' - '.$article_titre; ?>" />
+                                </a>
                               </span></div>
 
                               <?php      }     } ?>
