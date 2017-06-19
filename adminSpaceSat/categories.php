@@ -25,14 +25,14 @@ include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
-if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
-if(isset($_GET["tri"]))     $tri = htmlentities($_GET["tri"], ENT_QUOTES);
+if(isset($_GET["id"]))      $id = htmlentities(trim($_GET["id"]), ENT_QUOTES);  
+if(isset($_GET["action"]))  $action = htmlentities(trim($_GET["action"]), ENT_QUOTES);
+if(isset($_GET["tri"]))     $tri = htmlentities(trim($_GET["tri"]), ENT_QUOTES);
 else $tri = 'asc';
 // pagination 
 $page = '';
-if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
-if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES); 
+if(isset($_GET["page"]))    $page = htmlentities(trim($_GET["page"]), ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities(trim($_GET["aff"]), ENT_QUOTES); 
 //=========================================================
 //===== post formulaire ==========
 //=========================================================
@@ -40,7 +40,7 @@ if(isset($_POST['Envoie'])){
 
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : catégorie non enregistrée</div>';
 
-     $categorie       =  htmlentities($_POST['categorie'],   ENT_QUOTES);
+     $categorie       =  htmlentities(trim($_POST['categorie']),   ENT_QUOTES);
 
 //=========================================================
 //===== Vérification Erreurs post formulaire ==========

@@ -24,12 +24,12 @@ include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
-if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
+if(isset($_GET["id"]))      $id = htmlentities(trim($_GET["id"]), ENT_QUOTES);  
+if(isset($_GET["action"]))  $action = htmlentities(trim($_GET["action"]), ENT_QUOTES);
 // pagination 
 $page = '';
-if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
-if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES); 
+if(isset($_GET["page"]))    $page = htmlentities(trim($_GET["page"]), ENT_QUOTES); 
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities(trim($_GET["aff"]), ENT_QUOTES); 
 //=========================================================
 //===== post formulaire ==========
 //=========================================================
@@ -37,9 +37,9 @@ if(isset($_POST['Envoie'])){
 
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : utilisateur non enregistrée</div>';
 
-     $nom       =  htmlentities($_POST['nom'],   ENT_QUOTES);
-     $login     =  htmlentities($_POST['login'],   ENT_QUOTES);
-     $mdp       =  htmlentities($_POST['mdp'],   ENT_QUOTES);
+     $nom       =  htmlentities(trim($_POST['nom']),   ENT_QUOTES);
+     $login     =  htmlentities(trim($_POST['login']),   ENT_QUOTES);
+     $mdp       =  htmlentities(trim($_POST['mdp']),   ENT_QUOTES);
 
 //=========================================================
 //===== Vérification Erreurs post formulaire ==========

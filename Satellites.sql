@@ -1,4 +1,3 @@
-
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -38,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `werfl9_cnam_pro`.`cnamcp09_articles` (
   `CONTENT_article` BLOB NOT NULL,
   `DATE_article` DATETIME NOT NULL,
   `ID_categorie` INT NULL DEFAULT NULL,
+  `PHOTO_article` TINYINT(1) NULL,
   PRIMARY KEY (`ID_article`),
   INDEX `fk_articles_categories_idx` (`ID_categorie` ASC),
   CONSTRAINT `fk_articles_categories`
@@ -102,12 +102,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
---
--- Contenu de la table `cnamcp09_utilisateurs`
---
-
-INSERT INTO `cnamcp09_utilisateurs` (`ID_utilisateur`, `LOGIN_utilisateur`, `MDP_utilisateur`, `COURS_nfa`) VALUES
-(1, 'emilien', 'azerty', 'nfa_021'),
-(2, 'herve', 'azerty', 'nfa_021');

@@ -76,6 +76,7 @@ if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($
                               //--- affichage liste articles ---//
                               //--------------------------------// 
                             // pagination
+                              if(!isset($_SESSION['page'][$catid]))$_SESSION['page'][$catid]=1;
                               $pagination = paginationBdd($total, $_SESSION['page'][$catid],['cat_id'=>$catid] );
                               $result_art=$maBase->query("SELECT ID_article,TITRE_article  FROM cnamcp09_articles 
                                                                   WHERE ID_categorie ='{$catid}' AND PHOTO_article='1' ORDER BY DATE_article DESC

@@ -15,7 +15,7 @@ if(isset($_POST["query"]))   $_SESSION['query'] = htmlentities(trim($_POST["quer
 // pagination 
 $page = '';
 if(isset($_GET["page"]))    $page = htmlentities($_GET["page"], ENT_QUOTES); 
-if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES);  
+if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($_SERVER['PHP_SELF']))] = htmlentities($_GET["aff"], ENT_QUOTES); 
 ?>
 <!DOCTYPE HTML>
 <!--

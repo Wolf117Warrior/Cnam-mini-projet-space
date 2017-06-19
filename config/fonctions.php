@@ -29,7 +29,9 @@ function str_to_noaccent($str){
 // formate chaine utf8 bdd pour nom image 
 //str_to_noaccent : supprime tous les accents (utf8)  - pregreplace : remplace tout ce qui n'est pas une lettre non accentuées ou un chiffre par un tiret "-"  
 function formateNomImage($str){
-  return strtolower(preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str))));
+  $str_format = strtolower(preg_replace('/([^.a-z0-9]+)/i', '-',str_to_noaccent(html_entity_decode($str))));
+  if($str_format{strlen($str_format)-1}=="-") $str_format=  substr($str_format,0,-1);
+  return $str_format;
 }
 //=========================================================
 // fonction tronquer texte long
@@ -52,16 +54,18 @@ function paginationBdd($total_articles, $page, $params=null){
         if($key!='page'&&$key!='aff'&&!array_key_exists($key,$params))    $param_url .= '&'.$key.'='.$value;
       }
       // paramètres optionnels l'url
-      foreach ($params as $key => $value) {
-        $param_url .= '&'.$key.'='.$value;
+      if($params!=null){
+        foreach ($params as $key => $value) {
+          $param_url .= '&'.$key.'='.$value;
+        }
       }
 
-      // tableau select affichage par page
+        // tableau select affichage par page
         $tab_aff = [3,6,9,12,15,18,21,24,48];
-        
+
         // nombre articles par page
         $nom_page = preg_replace('/.php/','',basename($_SERVER['PHP_SELF']));
-        if(isset($_SESSION['aff'][$nom_page][$params['cat_id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['cat_id']];
+        if(isset($params)&&isset($_SESSION['aff'][$nom_page][$params['cat_id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['cat_id']];
         else if(isset($_SESSION['aff'][$nom_page])&&!is_array($_SESSION['aff'][$nom_page])) $nb_par_page = $_SESSION['aff'][$nom_page];
         else            $nb_par_page = $tab_aff[0];
 

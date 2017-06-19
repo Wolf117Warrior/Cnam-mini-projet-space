@@ -25,8 +25,8 @@ include_once("../config/fonctions.php");
 //=========================================================
 //===== init ==========
 //=========================================================
-if(isset($_GET["id"]))      $id = htmlentities($_GET["id"], ENT_QUOTES);  
-if(isset($_GET["action"]))  $action = htmlentities($_GET["action"], ENT_QUOTES);
+if(isset($_GET["id"]))      $id = htmlentities(trim($_GET["id"]), ENT_QUOTES);  
+if(isset($_GET["action"]))  $action = htmlentities(trim($_GET["action"]), ENT_QUOTES);
 
 //=========================================================
 //===== post formulaire ==========
@@ -35,9 +35,9 @@ if(isset($_POST['Envoie'])){
 
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : article non enregistrée</div>';
 
-     $categorie       =  htmlentities($_POST['categorie'],   ENT_QUOTES);
-     $titre           =  htmlentities($_POST['titre'],   ENT_QUOTES);
-     $contenu         =  htmlentities($_POST['contenu'],   ENT_QUOTES);
+     $categorie       =  htmlentities(trim($_POST['categorie']),   ENT_QUOTES);
+     $titre           =  htmlentities(trim($_POST['titre']),   ENT_QUOTES);
+     $contenu         =  htmlentities(trim($_POST['contenu']),   ENT_QUOTES);
 
 //=========================================================
 //===== Vérification Erreurs post formulaire ==========

@@ -22,8 +22,8 @@ if(isset($_POST['Envoie'])){
 
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : message non envoyé</div>';
 
-     $login     =  htmlentities($_POST['login'],   ENT_QUOTES);
-     $pwd       =  htmlentities($_POST['pwd'],  ENT_QUOTES);
+     $login     =  htmlentities(trim($_POST['login']),   ENT_QUOTES);
+     $pwd       =  htmlentities(trim($_POST['pwd']),  ENT_QUOTES);
      
      // Nom
      if(empty($login))   
