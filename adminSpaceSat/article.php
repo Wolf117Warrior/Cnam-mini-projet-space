@@ -182,7 +182,13 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
               $categorie = $art['ID_categorie'];
             }
 }
-
+//=========================================================
+//===== suprresion photos ==========
+//=========================================================
+if(isset($action)&&$action=='nouveau'){
+        $id ='';
+        $titre='';  
+}
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -245,7 +251,6 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
 
           <section id="one">
             <div class="inner">
-
               <?php // message retour formulaire envoyé
                     echo isset($retourEnvoiForm)?$retourEnvoiForm:''; ?>
                 <form name="article" method="post" enctype="multipart/form-data" action="article.php<?php echo isset($action)?'?action='.$action:''; ?><?php echo isset($id)?'&id='.$id:''; ?>">
@@ -253,11 +258,14 @@ if(isset($action)&&$action=='modifier'&&isset($id)){
                           <div class="12u$(xsmall) formChamp formArticle">
                             <span class="image fit">
                             <?php 
-                              $nom_img = formateNomImage($titre);
+                            $photo=false;
+                              if(isset($titre)&&!empty($titre)){ 
+                                $nom_img = formateNomImage($titre);
                               $img_o = '../medias/'.$id.'-'.$nom_img.'-o.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-o.jpg'):'');
                               $img_m = '../medias/'.$id.'-'.$nom_img.'-m.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-m.jpg'):'');
                               $img_p = '../medias/'.$id.'-'.$nom_img.'-p.jpg?v='.(file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')?filemtime('../medias/'.$id.'-'.$nom_img.'-p.jpg'):'');
                               $photo = (file_exists('../medias/'.$id.'-'.$nom_img.'-o.jpg')); 
+                            }
                             ?>
                               <img src="<?php echo ($photo?$img_p:'../images/no_pic.jpg'); ?>" style="float:left;max-width:360px;margin-right:10px" alt="">
                               <img src="<?php echo ($photo?$img_m:'../images/no_pic.jpg'); ?>" style="float:left;max-width:570px;margin-right:10px" alt="">
