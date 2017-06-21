@@ -78,7 +78,9 @@ if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($
         $tab_total_articles=$result_total_articles->fetch();
         $total_articles=$tab_total_articles[0];
         // pagination
-        $pagination = paginationBdd($total_articles,$page);
+        if(isset($id)) $param = ['id'=>$id];
+        else $param =null;
+        $pagination = paginationBdd($total_articles,$page, $param);
 
         $result=$maBase->query("SELECT a.*, c.LIBL_categorie  AS 'LIBL_categorie'
                 FROM cnamcp09_articles a LEFT JOIN cnamcp09_categories c ON a.ID_categorie = c.ID_categorie 

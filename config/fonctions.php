@@ -51,7 +51,7 @@ function paginationBdd($total_articles, $page, $params=null){
       // paramètres $_GET de l'url
       $param_url='';
       foreach ($_GET as $key => $value) {
-        if($key!='page'&&$key!='aff'&&!array_key_exists($key,$params))    $param_url .= '&'.$key.'='.$value;
+        if($key!='page'&&$key!='aff'&&$params!=null&&!array_key_exists($key,$params))    $param_url .= '&'.$key.'='.$value;
       }
       // paramètres optionnels l'url
       if($params!=null){
@@ -65,7 +65,8 @@ function paginationBdd($total_articles, $page, $params=null){
 
         // nombre articles par page
         $nom_page = preg_replace('/.php/','',basename($_SERVER['PHP_SELF']));
-        if(isset($params)&&isset($_SESSION['aff'][$nom_page][$params['cat_id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['cat_id']];
+        if(isset($params)&&isset($params['cat_id'])&&isset($_SESSION['aff'][$nom_page][$params['cat_id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['cat_id']];
+        else if(isset($params)&&isset($params['id'])&&isset($_SESSION['aff'][$nom_page][$params['id']])) $nb_par_page = $_SESSION['aff'][$nom_page][$params['id']];
         else if(isset($_SESSION['aff'][$nom_page])&&!is_array($_SESSION['aff'][$nom_page])) $nb_par_page = $_SESSION['aff'][$nom_page];
         else            $nb_par_page = $tab_aff[0];
 

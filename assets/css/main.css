@@ -3198,6 +3198,7 @@ margin:0 auto;
 
 #main_categories a.lien-cat {
 	text-decoration:none;
+	font-size: 95%;
 }
 #main_categories a.lien-cat:hover {
 	text-decoration:underline;
