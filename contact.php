@@ -2,6 +2,7 @@
 //=========================================================
 // fonctions
 //=========================================================
+include("./config/ConnexionBdd.php"); 
 include_once("./config/fonctions.php");
 //=========================================================
 // Vérification Formulaire avant soumission
@@ -41,8 +42,6 @@ if(isset($_POST['Envoie'])){
 
     //enregistrement Bdd
     if(!isset($GLOBALS["erreurs"])){
-      //conexion Bdd
-      include("./config/ConnexionBdd.php");
       // insertion message Bdd
       $sauvegarde_message=$maBase->exec("INSERT INTO cnamcp09_messages (NOM_message, EMAIL_message, OBJET_message, TEXT_message, DATE_message) 
             VALUES ('{$nom}','{$email}','{$objet}','{$message}',NOW())") ;
@@ -130,7 +129,11 @@ if(isset($_POST['Envoie'])){
       </div>
     </div>
   </form>
-  
+
+
+
+
+  <!-- carte html -->
   <a href="./carte.html">Carte Google</a>
   
     <div id="map"></div>

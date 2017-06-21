@@ -3,6 +3,9 @@
   <html lang="fr">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Les différents satellites artificiels et les agences qui les envoient dans l’espace." />
+  <meta name="keywords" content="satellite, artificiel, agence, station, spatiale, espace, ariane, nasa, space x, télécommunication, lanceur, fusée, spatiale,
+    orbite, satellisation, géolocalisation, téléscope, astronautique, ISS, sonde, blue origin " />
   
   <!-- css -->
   <?php $link_css = (isset($access)&&$access=='admin'?'../':'').'assets/css/main.css';

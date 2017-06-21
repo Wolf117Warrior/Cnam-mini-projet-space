@@ -2710,7 +2710,7 @@
 				-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 				-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 				transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-				background-color: #fff;
+				/*background-color: #fff;*/
 				border-radius: 0;
 				border: 0;
 				color: #ccccc !important;
@@ -2791,7 +2791,7 @@
 			}
 
 			#header a:last-child {
-				padding-right: 0;
+				padding-right: 10px;
 			}
 
 			#header a.navPanelToggle {
@@ -2951,7 +2951,7 @@
 
 /* Banner */
 
-	#banner {
+	/*#banner {
 		padding: 26em 0 10em 0;
 		background-image: url('../../images/banner.jpg');
 		background-size: 100% 65%;
@@ -2959,6 +2959,15 @@
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		text-align: center;
+	}*/
+		#banner {
+	    padding: 29em 0 10em 0;
+	    background-image: url(../../images/banner.jpg);
+	    background-size: 100% 70%;
+	    background-position: top;
+	    background-repeat: no-repeat;
+	    background-attachment: fixed;
+	    text-align: center;
 	}
 
 		#banner h1 {
@@ -3473,27 +3482,60 @@ span.pagination_on {
 	border:1px solid #FD8E39;
 }
 
- /* responsive */
+  /* responsive */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-
 			.administration .newcat .formChamp input   {
 				width: 400px;
 			}
+}
 
+
+		@media screen and (max-width: 1680px) {
+
+			#banner {
+				       padding: 29em 0 10em 0;
+					   background-size: 100% 70%;
+			}
+			.administration .newcat .formChamp input   {
+				width: 600px;
+			}
 		}
 
 		@media screen and (max-width: 1280px) {
 
+			#banner {
+				       padding: 22em 0 10em 0;
+    					background-size: 100% 50%;
+			}
 			.administration .newcat .formChamp input   {
 				width: 600px;
 			}
 
 		}
 
-
-
-
 		@media screen and (max-width: 980px) {
+
+			#banner {
+    			padding: 10em 0 10em 0;
+    			background-size: 100% 100%;
+			}
+
+			#recherche .recherche-bouton {
+    			width: 15%;
+			}
+			h3 {
+			    font-size: 1em;
+			}
+			div.bulleErreur {
+			    top: 4px;
+			    left: 10px;
+			}
+			.administration #article .choix-photo input.input-file:before {
+    			left: -2px;
+			}
+			.administration #utilisateurs .formChamp input {
+    			width: 205px;
+			}
 
 			.administration .newcat .formChamp input   {
 				width: 400px;
@@ -3502,7 +3544,42 @@ span.pagination_on {
 		}
 
 		@media screen and (max-width: 736px) {
+			* {
+				font-size: 95%!important;
+			}
+			#banner {
+    			padding: 5em 0 10em 0;
+    			background-size: 100% 100%;
+			}
 
+			#one {
+			    padding-top: 0px;
+			    padding-bottom: 30px;
+			}
+			#recherche .recherche-bouton {
+				clear:none;
+				 width: 25%;
+				}
+		#recherche .recherche-bouton input[type='submit']{
+				     height: 2.75em;
+			}
+
+		input[type="submit"], input[type="reset"], input[type="button"], button, .button {
+    		padding: 0 0.1em; 
+		}
+		.pagination select#aff {
+		    min-width: 45px;
+		        height: 23px;
+		}
+		.pagination span a, span.pagination_on {
+   			 padding: 7px;
+    
+		}
+		.pagination span, span.pagination_on {
+		    min-width: 10px;
+		    min-height: 24px;
+		    margin: 2px;
+		}
 			.administration .newcat .formChamp input   {
 				width: 200px;
 			}
