@@ -134,9 +134,12 @@ if(isset($_POST['Envoie'])){
 
 
   <!-- carte html -->
-  <a href="./carte.html">Carte Google</a>
+
   
-    <div id="map"></div>
+    <div id="container-map">
+      <div id="map"></div>
+      <div id="lien-map"><a href="./carte.html">Carte Google</a></div>
+    </div>
     <script>
       var map;
       function initMap() {
@@ -148,6 +151,7 @@ if(isset($_POST['Envoie'])){
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-BTFgZZPQU6_Au_s9sWj1cKR00uZXErM&callback=initMap"
     async defer></script>
+
 </section>
 
 		<!-- Footer -->

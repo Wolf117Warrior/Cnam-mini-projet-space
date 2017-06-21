@@ -3481,14 +3481,35 @@ span.pagination_on {
 	color:#FD8E39;
 	border:1px solid #FD8E39;
 }
-
+/* map */
+#container-map{
+position: relative;	
+display: inline-block;
+float:right;
+margin-top:-150px;
+margin-bottom: 20px;
+border:1px solid black;
+}
+#map{
+position: relative;
+    overflow: hidden;
+    display: block;
+    width: 400px;
+    height: 200px;
+    border:1px solid black;
+}
+#lien-map{
+	text-align: center;
+	position: relative;	
+	display: block;
+	border:1px solid black;
+}
   /* responsive */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
 			.administration .newcat .formChamp input   {
 				width: 400px;
 			}
 }
-
 
 		@media screen and (max-width: 1680px) {
 
@@ -3498,6 +3519,13 @@ span.pagination_on {
 			}
 			.administration .newcat .formChamp input   {
 				width: 600px;
+			}
+			#container-map{
+				margin-top:-130px;
+			}
+			#map{
+    			width: 400px;
+    			height: 200px;
 			}
 		}
 
@@ -3511,6 +3539,13 @@ span.pagination_on {
 				width: 600px;
 			}
 
+			#container-map{
+				margin-top:-130px;
+			}
+			#map{
+    			width: 400px;
+    			height: 200px;
+			}
 		}
 
 		@media screen and (max-width: 980px) {
@@ -3540,10 +3575,17 @@ span.pagination_on {
 			.administration .newcat .formChamp input   {
 				width: 400px;
 			}
+			#container-map{
+				margin-top:-130px;
+			}
+			#map{
+    			width: 400px;
+    			height: 200px;
+			}
 
 		}
 
-		@media screen and (max-width: 736px) {
+		@media screen and (max-width: 736px) { 
 			* {
 				font-size: 95%!important;
 			}
@@ -3560,36 +3602,50 @@ span.pagination_on {
 				clear:none;
 				 width: 25%;
 				}
-		#recherche .recherche-bouton input[type='submit']{
-				     height: 2.75em;
-			}
+			#recherche .recherche-bouton input[type='submit']{
+					     height: 2.75em;
+				}
 
-		input[type="submit"], input[type="reset"], input[type="button"], button, .button {
-    		padding: 0 0.1em; 
-		}
-		.pagination select#aff {
-		    min-width: 45px;
-		        height: 23px;
-		}
-		.pagination span a, span.pagination_on {
-   			 padding: 7px;
-    
-		}
-		.pagination span, span.pagination_on {
-		    min-width: 10px;
-		    min-height: 24px;
-		    margin: 2px;
-		}
+			input[type="submit"], input[type="reset"], input[type="button"], button, .button {
+	    		padding: 0 0.1em; 
+			}
+			.pagination select#aff {
+			    min-width: 45px;
+			        height: 23px;
+			}
+			.pagination span a, span.pagination_on {
+	   			 padding: 7px;
+	    
+			}
+			.pagination span, span.pagination_on {
+			    min-width: 10px;
+			    min-height: 24px;
+			    margin: 2px;
+			}
 			.administration .newcat .formChamp input   {
 				width: 200px;
 			}
+			#container-map{
+				margin-top:-90px;
+			}
+			#map{
+    			width: 280px;
+    			height: 150px;
+			}
 
 		}
 
-		@media screen and (max-width: 480px) {
+		@media screen and (max-width: 480px) { 
 
 			.administration .newcat .formChamp input   {
 				width: 200px;
+			}
+			#container-map{
+				margin-top:0px;
+			}
+			#map{
+    			width: 325px;
+    			height: 150px;
 			}
 
 		}
