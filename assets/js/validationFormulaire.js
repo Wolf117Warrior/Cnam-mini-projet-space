@@ -32,6 +32,9 @@ window.onload=function(){
 			//== nom ==
 			if(document.forms[0].nom.value=="")
 				tab_erreur['nom']="<b>Nom</b> obligatoire";
+						//== nom ==
+			if(document.forms[0].prenom.value=="")
+				tab_erreur['prenom']="<b>Prénom</b> obligatoire";
 	
 			//== email ==
 			if(document.forms[0].email.value=="")

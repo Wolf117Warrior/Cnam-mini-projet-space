@@ -12,6 +12,7 @@ if(isset($_POST['Envoie'])){
   $retourEnvoiForm = '<div class="retourEnvoiForm">Erreur : message non envoyé</div>';
 
      $nom       =  htmlentities($_POST['nom'],   ENT_QUOTES);
+     $prenom    =  htmlentities($_POST['prenom'],   ENT_QUOTES);
      $email     =  htmlentities($_POST['email'],  ENT_QUOTES);
      $objet     =  htmlentities($_POST['objet'], ENT_QUOTES);
      $message   =  htmlentities($_POST['message'],   ENT_QUOTES);
@@ -20,6 +21,9 @@ if(isset($_POST['Envoie'])){
      // Nom
      if(empty($nom))   
             $GLOBALS["erreurs"]['nom']='<b>Nom</b> obligatoire';
+
+    if(empty($prenom))   
+            $GLOBALS["erreurs"]['prenom']='<b>Prénom</b> obligatoire';
      
      // Email
      if(empty($email))   
@@ -43,8 +47,8 @@ if(isset($_POST['Envoie'])){
     //enregistrement Bdd
     if(!isset($GLOBALS["erreurs"])){
       // insertion message Bdd
-      $sauvegarde_message=$maBase->exec("INSERT INTO cnamcp09_messages (NOM_message, EMAIL_message, OBJET_message, TEXT_message, DATE_message) 
-            VALUES ('{$nom}','{$email}','{$objet}','{$message}',NOW())") ;
+      $sauvegarde_message=$maBase->exec("INSERT INTO cnamcp09_messages (NOM_message, PRENOM_message,EMAIL_message, OBJET_message, TEXT_message, DATE_message) 
+            VALUES ('{$nom}','{$prenom}','{$email}','{$objet}','{$message}',NOW())") ;
       // si succès
       if($sauvegarde_message==1)
         $retourEnvoiForm = '<div class="retourEnvoiFormok">Le message a été envoyé avec succès</div>';
@@ -98,6 +102,10 @@ if(isset($_POST['Envoie'])){
       <div class="6u 12u$(xsmall) formChamp">
         <?php setBulleErreur('nom'); ?>
         <input type="text" name="nom" id="nom" value="<?php echo isset($nom)?html_entity_decode($nom):''; ?>" <?php setClassErreur('nom'); ?> placeholder="Nom" />
+      </div>
+      <div class="6u 12u$(xsmall) formChamp">
+        <?php setBulleErreur('prenom'); ?>
+        <input type="text" name="prenom" id="prenom" value="<?php echo isset($prenom)?html_entity_decode($prenom):''; ?>" <?php setClassErreur('prenom'); ?> placeholder="Prénom" />
       </div>
       <div class="6u$ 12u$(xsmall) formChamp">
         <?php setBulleErreur('email'); ?>

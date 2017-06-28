@@ -89,6 +89,7 @@ if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($
                     <thead>
                       <tr>
                         <th>Nom</th>
+                        <th>Prénom</th>
                         <th>Email</th>
                         <th>Objet</th>
                         <th>Message</th>
@@ -114,6 +115,7 @@ if(isset($_GET["aff"]))     $_SESSION['aff'][preg_replace('/.php/','',basename($
 
                       <tr>
                         <td><?php echo html_entity_decode($message['NOM_message']); ?></td>
+                        <td><?php echo html_entity_decode($message['PRENOM_message']); ?></td>
                         <td><a href="mailto:<?php echo html_entity_decode($message['EMAIL_message']); ?>"><?php echo html_entity_decode($message['EMAIL_message']); ?></a></td>
                         <td><?php echo html_entity_decode($message['OBJET_message']); ?></td>
                         <td width="600">
